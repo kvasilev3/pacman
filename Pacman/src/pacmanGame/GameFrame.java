@@ -14,10 +14,10 @@ public class GameFrame extends JFrame {
 		add(new Board());
 		
         setTitle("Pacman original 2.0");
-        setSize(640, 520);
+        setSize(646, 509);
         
         setLocationRelativeTo(null);
-        //setResizable(false);
+        setResizable(false); //Temporary (Will be switched to true when main game is done)
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 	
