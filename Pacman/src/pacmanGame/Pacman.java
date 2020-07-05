@@ -1,8 +1,14 @@
 package pacmanGame;
 
 import java.awt.Image;
+import javax.swing.ImageIcon;
 
 public class Pacman {
-	
-	private Image background;
+
+	private Image yellowMan;
+
+	public Pacman() {
+		ImageIcon pacmanImage = new ImageIcon("Pacman/src/resources/pacman.png");
+		yellowMan = pacmanImage.getImage();
+	}
 }

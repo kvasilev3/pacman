@@ -1,6 +1,7 @@
 package pacmanGame;
 
 import java.awt.EventQueue;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 public class GameFrame extends JFrame {
@@ -15,6 +16,9 @@ public class GameFrame extends JFrame {
 		
         setTitle("Pacman original 2.0");
         setSize(646, 509);
+        
+        ImageIcon myAppImage = new ImageIcon("Pacman/src/resources/pacman_desktop.png");
+        setIconImage(myAppImage.getImage());
         
         setLocationRelativeTo(null);
         setResizable(false); //Temporary (Will be switched to true when main game is done)
