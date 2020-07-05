@@ -11,7 +11,7 @@ public class GameFrame extends JFrame {
 	
 	private void initUI() {
 
-        setTitle("Pacman");
+        setTitle("Pacman 2.0");
         setSize(640, 480);
         
         setLocationRelativeTo(null);
