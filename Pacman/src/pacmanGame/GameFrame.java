@@ -11,11 +11,13 @@ public class GameFrame extends JFrame {
 	
 	private void initUI() {
 
+		add(new Board());
+		
         setTitle("Pacman original 2.0");
-        setSize(640, 480);
+        setSize(640, 520);
         
         setLocationRelativeTo(null);
-        setResizable(false);
+        //setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 	
