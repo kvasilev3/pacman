@@ -1,5 +1,8 @@
 package pacmanGame;
 
-public class Pacman {
+import java.awt.Image;
 
+public class Pacman {
+	
+	private Image background;
 }
