@@ -1,5 +1,5 @@
 package pacmanGame;
 
-public class Pinky {
+public class Pinky extends Ghost {
 
 }

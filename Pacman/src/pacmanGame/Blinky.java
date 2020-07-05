@@ -1,5 +1,5 @@
 package pacmanGame;
 
-public class Blinky {
+public class Blinky extends Ghost {
 
 }

@@ -1,5 +1,5 @@
 package pacmanGame;
 
-public class Clyde {
+public class Clyde extends Ghost {
 
 }
