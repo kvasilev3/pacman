@@ -12,7 +12,7 @@ public class GameFrame extends JFrame {
 	
 	private void initUI() {
 
-		add(new Board());
+		add(Board.getSingleton());
 		
         setTitle("Pacman original 2.0");
         setSize(646, 509);

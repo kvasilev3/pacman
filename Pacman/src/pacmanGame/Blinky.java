@@ -11,4 +11,8 @@ public class Blinky extends Ghost {
 		ImageIcon blinkyImage = new ImageIcon("Pacman/src/resources/blinky_1.png");
 		redGhost = blinkyImage.getImage();
 	}
+	
+	public Image getImage() {
+		return redGhost;
+	}
 }
