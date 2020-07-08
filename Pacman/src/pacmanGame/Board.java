@@ -5,6 +5,11 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.Timer;
@@ -44,9 +49,13 @@ public class Board extends JPanel implements ActionListener {
 	}
 	
 	private void initTiles() {
-		tiles = new int[GRID_WIDTH][GRID_HEIGHT];
+		final int BLUE = 0xFF0000FF;
+		final int GREEN = 0xFF00FF00;
+		final int RED = 0xFFFF0000;
 		
-		// Sample values
+		tiles = new int[GRID_HEIGHT][GRID_WIDTH];
+		
+		/*// Sample values
 		tiles[2][2] = TILE_HAS_POWER_PELLET;
 		tiles[2][3] = TILE_IS_WALKABLE;
 		tiles[2][4] = TILE_IS_WALKABLE;
@@ -64,7 +73,37 @@ public class Board extends JPanel implements ActionListener {
 		tiles[7][4] = TILE_IS_WALKABLE;
 		tiles[7][5] = TILE_IS_WALKABLE;
 		tiles[7][6] = TILE_IS_WALKABLE;
-		tiles[7][7] = TILE_HAS_PELLET;
+		tiles[7][7] = TILE_HAS_PELLET;*/
+		
+		File imageFile = new File("Pacman/src/resources/tiles.png");
+		BufferedImage image = null;
+		try {
+			image = ImageIO.read(imageFile);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return;
+		}
+		
+		if (image.getWidth() != GRID_WIDTH) {
+			return;
+		}
+		if (image.getHeight() != GRID_HEIGHT) {
+			return;
+		}
+		
+		for (int y = 0; y < GRID_HEIGHT; y++) {
+			for (int x = 0; x < GRID_WIDTH; x++) {
+				int color = image.getRGB(x, y);
+				if (color == BLUE) {
+					tiles[y][x] = TILE_IS_WALKABLE;
+				} else if (color == GREEN) {
+					tiles[y][x] = TILE_HAS_PELLET;
+				} else if (color == RED) {
+					tiles[y][x] = TILE_HAS_POWER_PELLET;
+				}
+			}
+		}
 	}
 	
 	public static Board getSingleton() {
@@ -76,11 +115,7 @@ public class Board extends JPanel implements ActionListener {
 			return false;
 		if (y < 0 || y >= GRID_HEIGHT)
 			return false;
-		return tiles[x][y] > TILE_IS_NOT_WALKABLE;
-	}
-
-	public boolean isTileAvailable(int x, int y) {
-		return false;
+		return tiles[y][x] > TILE_IS_NOT_WALKABLE;
 	}
 
 	@Override
