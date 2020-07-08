@@ -11,4 +11,8 @@ public class Pacman {
 		ImageIcon pacmanImage = new ImageIcon("Pacman/src/resources/pacman.png");
 		yellowMan = pacmanImage.getImage();
 	}
+	
+	public Image getImage() {
+		return yellowMan;
+	}
 }

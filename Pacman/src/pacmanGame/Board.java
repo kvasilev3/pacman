@@ -21,6 +21,8 @@ public class Board extends JPanel implements ActionListener {
 	private static Board singleton = new Board();
 	
 	private Blinky blinky = new Blinky();
+	private Inky inky = new Inky();
+	private Pacman pacman = new Pacman();
 	
 	private Board() {
 		ImageIcon ii = new ImageIcon("Pacman/src/resources/maze.png");
@@ -45,7 +47,10 @@ public class Board extends JPanel implements ActionListener {
         Graphics2D g2d = (Graphics2D) g;
         g2d.drawImage(background, 0, 0, this);
         
-        g2d.drawImage(blinky.getImage(), 10, 10, this);
+        //Coordinates are starting positions of the sprite
+        g2d.drawImage(blinky.getImage(), 310, 175, this); 
+        g2d.drawImage(inky.getImage(), 285, 215, this);
+        g2d.drawImage(pacman.getImage(), 310, 340, this);
     }
 
 	@Override

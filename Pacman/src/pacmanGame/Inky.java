@@ -11,4 +11,8 @@ private Image cyanGhost;
 		ImageIcon inkyImage = new ImageIcon("Pacman/src/resources/inky_1.png");
 		cyanGhost = inkyImage.getImage();
 	}
+	
+	public Image getImage() {
+		return cyanGhost;
+	}
 }
