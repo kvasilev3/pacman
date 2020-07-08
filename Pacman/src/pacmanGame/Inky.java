@@ -5,14 +5,17 @@ import javax.swing.ImageIcon;
 
 public class Inky extends Ghost {
 	
-private Image cyanGhost;
-	
-	public Inky() {
-		ImageIcon inkyImage = new ImageIcon("Pacman/src/resources/inky_1.png");
-		cyanGhost = inkyImage.getImage();
-	}
-	
+	private Image[] cyanGhost = {
+			new ImageIcon("Pacman/src/resources/inky_1.png").getImage(),
+			new ImageIcon("Pacman/src/resources/inky_2.png").getImage()
+			};
+	private int i = 0;
+
 	public Image getImage() {
-		return cyanGhost;
+		i++;
+		if (i >= cyanGhost.length) {
+			i = 0;
+		}
+		return cyanGhost[i];
 	}
 }

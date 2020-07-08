@@ -5,14 +5,19 @@ import javax.swing.ImageIcon;
 
 public class Pacman {
 
-	private Image yellowMan;
+	private Image[] yellowMan = {
+			new ImageIcon("Pacman/src/resources/pacman.png").getImage(),
+			new ImageIcon("Pacman/src/resources/pacman_right_1.png").getImage(),
+			new ImageIcon("Pacman/src/resources/pacman_right_2.png").getImage(),
+			new ImageIcon("Pacman/src/resources/pacman_right_1.png").getImage()
+			};
+	private int i = 0;
 
-	public Pacman() {
-		ImageIcon pacmanImage = new ImageIcon("Pacman/src/resources/pacman.png");
-		yellowMan = pacmanImage.getImage();
-	}
-	
 	public Image getImage() {
-		return yellowMan;
+		i++;
+		if (i >= yellowMan.length) {
+			i = 0;
+		}
+		return yellowMan[i];
 	}
 }

@@ -1,6 +1,5 @@
 package pacmanGame;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -11,34 +10,37 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 public class Board extends JPanel implements ActionListener {
-	
+
 	private Timer timer;
-	private final int FRAMES_PER_SECOND = 30;
+	private final int FRAMES_PER_SECOND = 10;
 	private final int DELAY = 1000 / FRAMES_PER_SECOND; // ms
 	private Image background;
+
 	private final int GRID_WIDTH = 28*5; // The width of the original game was 28 tiles. We've decided to make it 5 times bigger.
 	private final int GRID_HEIGHT = 31*5; // The height of the original game was 31 tiles. We've decided to make it 5 times bigger. 
-	private int tiles[][];
+
 	private final int TILE_IS_NOT_WALKABLE = 0;
 	private final int TILE_IS_WALKABLE = 1;
 	private final int TILE_HAS_PELLET = 2;
 	private final int TILE_HAS_POWER_PELLET = 3;
 	private final int TILE_PELLET_EATEN = 4;
 	
+	private int tiles[][] = new int[GRID_WIDTH][GRID_HEIGHT];
+
 	private static Board singleton = new Board();
-	
+
 	private Blinky blinky = new Blinky();
 	private Inky inky = new Inky();
 	private Pacman pacman = new Pacman();
-	
+
 	private Board() {
 		initTiles();
 		
 		ImageIcon ii = new ImageIcon("Pacman/src/resources/maze.png");
-        background = ii.getImage();
-        
+		background = ii.getImage();
+
 		timer = new Timer(DELAY, this);
-        timer.start();
+		timer.start();
 	}
 	
 	private void initTiles() {
@@ -76,19 +78,23 @@ public class Board extends JPanel implements ActionListener {
 			return false;
 		return tiles[x][y] > TILE_IS_NOT_WALKABLE;
 	}
-	
-	@Override
-    public void paintComponent(Graphics g) {
-        super.paintComponent(g);
 
-        Graphics2D g2d = (Graphics2D) g;
-        g2d.drawImage(background, 0, 0, this);
-        
-        //Coordinates are starting positions of the sprite
-        g2d.drawImage(blinky.getImage(), 310, 175, this); 
-        g2d.drawImage(inky.getImage(), 285, 215, this);
-        g2d.drawImage(pacman.getImage(), 310, 340, this);
-    }
+	public boolean isTileAvailable(int x, int y) {
+		return false;
+	}
+
+	@Override
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+
+		Graphics2D g2d = (Graphics2D) g;
+		g2d.drawImage(background, 0, 0, this);
+
+		// Coordinates are starting positions of the sprite
+		g2d.drawImage(blinky.getImage(), 310, 175, this);
+		g2d.drawImage(inky.getImage(), 285, 215, this);
+		g2d.drawImage(pacman.getImage(), 310, 340, this);
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
