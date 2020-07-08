@@ -4,15 +4,18 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 
 public class Blinky extends Ghost {
-	
-	private Image redGhost;
-	
-	public Blinky() {
-		ImageIcon blinkyImage = new ImageIcon("Pacman/src/resources/blinky_1.png");
-		redGhost = blinkyImage.getImage();
-	}
-	
+
+	private Image[] redGhost = {
+			new ImageIcon("Pacman/src/resources/blinky_1.png").getImage(),
+			new ImageIcon("Pacman/src/resources/blinky_2.png").getImage()
+			};
+	private int i = 0;
+
 	public Image getImage() {
-		return redGhost;
+		i++;
+		if (i >= redGhost.length) {
+			i = 0;
+		}
+		return redGhost[i];
 	}
 }
