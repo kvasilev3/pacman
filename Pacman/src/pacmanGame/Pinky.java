@@ -1,15 +1,21 @@
 package pacmanGame;
 
 import java.awt.Image;
-
 import javax.swing.ImageIcon;
 
 public class Pinky extends Ghost {
 
-	private Image pinkGhost;
+	private Image[] pinkGhost = {
+			new ImageIcon("Pacman/src/resources/pinky_1.png").getImage(),
+			new ImageIcon("Pacman/src/resources/pinky_2.png").getImage()
+	};
 	
-	public Pinky() {
-		ImageIcon pinkyImage = new ImageIcon("Pacman/src/resources/pinky_1.png");
-		pinkGhost = pinkyImage.getImage();
+	private int i = 0;
+	public Image getImage() {
+		i++;
+		if (i >= pinkGhost.length) {
+			i = 0;
+		}
+		return pinkGhost[i];
 	}
 }

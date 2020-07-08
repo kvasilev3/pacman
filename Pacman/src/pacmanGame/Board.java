@@ -36,6 +36,8 @@ public class Board extends JPanel implements ActionListener {
 
 	private Blinky blinky = new Blinky();
 	private Inky inky = new Inky();
+	private Pinky pinky = new Pinky();
+	private Clyde clyde = new Clyde();
 	private Pacman pacman = new Pacman();
 
 	private Board() {
@@ -128,6 +130,8 @@ public class Board extends JPanel implements ActionListener {
 		// Coordinates are starting positions of the sprite
 		g2d.drawImage(blinky.getImage(), 310, 175, this);
 		g2d.drawImage(inky.getImage(), 285, 215, this);
+		g2d.drawImage(pinky.getImage(), 310, 215, this);
+		g2d.drawImage(clyde.getImage(), 335, 215, this);
 		g2d.drawImage(pacman.getImage(), 310, 340, this);
 	}
 
