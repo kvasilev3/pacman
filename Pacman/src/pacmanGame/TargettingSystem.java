@@ -82,9 +82,7 @@ public class TargettingSystem {
 
 		
 		
-//		private double distancefromUpper(currentX, currentY, int targetX, int targetY) {
-//			
-//		}
+		
 		
 		
 //		if (Board.getSingleton().isTileWalkable(currentX, currentY)) {
@@ -92,6 +90,9 @@ public class TargettingSystem {
 //		} else {
 //			// false logic
 //		}
-		
+	}
+
+	private double distanceFromUpper(int currentX, int currentY, int targetX, int targetY) {
+		return Math.sqrt(Math.pow(targetX - currentX, 2) + Math.pow(targetY - currentY, 2));
 	}
 }
