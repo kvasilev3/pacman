@@ -18,4 +18,12 @@ public class Blinky extends Ghost {
 		}
 		return redGhost[i];
 	}
+	
+	public static int getX() {
+		return 182;
+	}
+	
+	public static int getY() {
+		return 149;
+	}
 }

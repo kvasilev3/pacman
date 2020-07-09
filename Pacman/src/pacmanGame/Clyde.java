@@ -18,4 +18,12 @@ public class Clyde extends Ghost {
 		}
 		return yellowGhost[i];
 	}
+	
+	public static int getX() {
+		return 207;
+	}
+	
+	public static int getY() {
+		return 188;
+	}
 }

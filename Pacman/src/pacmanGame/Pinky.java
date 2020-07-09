@@ -18,4 +18,12 @@ public class Pinky extends Ghost {
 		}
 		return pinkGhost[i];
 	}
+	
+	public static int getX() {
+		return 182;
+	}
+	
+	public static int getY() {
+		return 188;
+	}
 }

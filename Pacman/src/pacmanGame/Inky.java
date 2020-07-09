@@ -18,4 +18,12 @@ public class Inky extends Ghost {
 		}
 		return cyanGhost[i];
 	}
+	
+	public static int getX() {
+		return 157;
+	}
+	
+	public static int getY() {
+		return 188;
+	}
 }

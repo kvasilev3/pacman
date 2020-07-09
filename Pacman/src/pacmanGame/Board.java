@@ -127,11 +127,11 @@ public class Board extends JPanel implements ActionListener {
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.drawImage(background, 0, 0, this);
 
+		g2d.drawImage(blinky.getImage(), Blinky.getX(), Blinky.getY(), this);
+		g2d.drawImage(inky.getImage(), Inky.getX(), Inky.getY(), this);
+		g2d.drawImage(pinky.getImage(), Pinky.getX(), Pinky.getY(), this);
+		g2d.drawImage(clyde.getImage(), Clyde.getX(), Clyde.getY(), this);
 		// Coordinates are starting positions of the sprite
-		g2d.drawImage(blinky.getImage(), 182, 149, this);
-		g2d.drawImage(inky.getImage(), 157, 188, this);
-		g2d.drawImage(pinky.getImage(), 182, 188, this);
-		g2d.drawImage(clyde.getImage(), 207, 188, this);
 		g2d.drawImage(pacman.getImage(), 182, 312, this);
 	}
 
