@@ -24,7 +24,7 @@ public class GameFrame extends JFrame {
         setLocationRelativeTo(null);
         setResizable(false); //Temporary (Will be switched to true when main game is done)
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        
+       
     }
 	
 	public static void main(String[] args) {
