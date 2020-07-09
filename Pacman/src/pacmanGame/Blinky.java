@@ -4,6 +4,12 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 
 public class Blinky extends Ghost {
+	
+	public Blinky() {
+		x = 70;
+		y = 57;
+		direction = Direction.Right;
+	}
 
 	private Image[] redGhost = {
 			new ImageIcon("Pacman/src/resources/blinky_1.png").getImage(),
@@ -17,13 +23,5 @@ public class Blinky extends Ghost {
 			i = 0;
 		}
 		return redGhost[i];
-	}
-	
-	public static int getX() {
-		return 182;
-	}
-	
-	public static int getY() {
-		return 149;
 	}
 }

@@ -126,13 +126,26 @@ public class Board extends JPanel implements ActionListener {
 
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.drawImage(background, 0, 0, this);
+		
+		blinky.move();
+		inky.move();
+		pinky.move();
+		clyde.move();
 
-		g2d.drawImage(blinky.getImage(), Blinky.getX(), Blinky.getY(), this);
-		g2d.drawImage(inky.getImage(), Inky.getX(), Inky.getY(), this);
-		g2d.drawImage(pinky.getImage(), Pinky.getX(), Pinky.getY(), this);
-		g2d.drawImage(clyde.getImage(), Clyde.getX(), Clyde.getY(), this);
+		g2d.drawImage(blinky.getImage(), convertX(blinky.getX()), convertY(blinky.getY()), this);
+		g2d.drawImage(inky.getImage(), convertX(inky.getX()), convertY(inky.getY()), this);
+		g2d.drawImage(pinky.getImage(), convertX(pinky.getX()), convertY(pinky.getY()), this);
+		g2d.drawImage(clyde.getImage(), convertX(clyde.getX()), convertY(clyde.getY()), this);
 		// Coordinates are starting positions of the sprite
 		g2d.drawImage(pacman.getImage(), 182, 312, this);
+	}
+	
+	private int convertX(int x) {
+		return (int) (2.7571429 * (float)(x-2));
+	}
+	
+	private int convertY(int y) {
+		return (int) (2.76129 * (float)(y-2));
 	}
 
 	@Override

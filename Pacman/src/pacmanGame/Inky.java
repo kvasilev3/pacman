@@ -5,6 +5,12 @@ import javax.swing.ImageIcon;
 
 public class Inky extends Ghost {
 	
+	public Inky() {
+		x = 7;
+		y = 7;
+		direction = Direction.Right;
+	}
+	
 	private Image[] cyanGhost = {
 			new ImageIcon("Pacman/src/resources/inky_1.png").getImage(),
 			new ImageIcon("Pacman/src/resources/inky_2.png").getImage()
@@ -17,13 +23,5 @@ public class Inky extends Ghost {
 			i = 0;
 		}
 		return cyanGhost[i];
-	}
-	
-	public static int getX() {
-		return 157;
-	}
-	
-	public static int getY() {
-		return 188;
 	}
 }

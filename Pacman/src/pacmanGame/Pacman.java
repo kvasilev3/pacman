@@ -3,7 +3,7 @@ package pacmanGame;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 
-public class Pacman {
+public class Pacman extends Sprite {
 
 	private Image[] yellowMan = {
 			new ImageIcon("Pacman/src/resources/pacman.png").getImage(),
