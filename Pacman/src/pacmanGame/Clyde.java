@@ -7,8 +7,8 @@ public class Clyde extends Ghost {
 
 	public Clyde() {
 		//Starting Position
-		x = 7;
-		y = 7;
+		x = 7; //83
+		y = 147; //71
 		direction = Direction.Up;
 	}
 	

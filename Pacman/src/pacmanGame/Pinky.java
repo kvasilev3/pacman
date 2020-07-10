@@ -7,8 +7,8 @@ public class Pinky extends Ghost {
 
 	public Pinky() {
 		//Starting Position
-		x = 7;
-		y = 7;
+		x = 7; //70
+		y = 7; //73
 		direction = Direction.Down;
 	}
 	

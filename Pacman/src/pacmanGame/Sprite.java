@@ -15,12 +15,12 @@ public class Sprite {
 		return y;
 	}
 	
-	public void setX(int givenX) {
-		x = givenX;
+	public void setX(int x) {
+		this.x = x;
 	}
 	
-	public void setY(int givenY) {
-		y = givenY;
+	public void setY(int y) {
+		this.y = y;
 	}
 	
 	protected void move() {

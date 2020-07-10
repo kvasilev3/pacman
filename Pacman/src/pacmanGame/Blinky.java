@@ -7,7 +7,7 @@ public class Blinky extends Ghost {
 	
 	public Blinky() {
 		//Starting Position
-		x = 69;
+		x = 70;
 		y = 57;
 		direction = Direction.Left;
 	}

@@ -167,7 +167,7 @@ public class Board extends JPanel implements ActionListener {
 	private int convertX(int x) {
 		return (int) (2.7571429 * (x-3));
 	}
-	
+
 	private int convertY(int y) {
 		return (int) (2.76129 * (y-3));
 	}
@@ -178,6 +178,3 @@ public class Board extends JPanel implements ActionListener {
 	}
 
 }
-
-//(0, 72) --> (138, 72)
-//(139, 72) --> (1, 72)
