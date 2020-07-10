@@ -138,7 +138,14 @@ public class Board extends JPanel implements ActionListener {
 		for (int i = 0; i < Ghosts.length; i++) {
 			Ghosts[i].move();
 			
-			//System.out.println(Ghosts[i]);
+			if (Ghosts[i].getX() == 0 && Ghosts[i].getY() == 72 && Ghosts[i].direction == Direction.Left) {
+				Ghosts[i].setX(138);
+				Ghosts[i].setY(72);
+			} else if (Ghosts[i].getX() == 139 && Ghosts[i].getY() == 72 && Ghosts[i].direction == Direction.Right) {
+				Ghosts[i].setX(1);
+				Ghosts[i].setY(72);
+			}
+			
 			g2d.drawImage(Ghosts[i].getImage(), convertX(Ghosts[i].getX()), convertY(Ghosts[i].getY()), this);
 			
 			if (Ghosts[i].direction == Direction.Up) {
@@ -158,11 +165,11 @@ public class Board extends JPanel implements ActionListener {
 	}
 	
 	private int convertX(int x) {
-		return (int) (2.7571429 * (float)(x-2));
+		return (int) (2.7571429 * (x-2));
 	}
 	
 	private int convertY(int y) {
-		return (int) (2.76129 * (float)(y-2));
+		return (int) (2.76129 * (y-2));
 	}
 
 	@Override
@@ -171,3 +178,6 @@ public class Board extends JPanel implements ActionListener {
 	}
 
 }
+
+//(0, 72) --> (138, 72)
+//(139, 72) --> (1, 72)
