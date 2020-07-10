@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Array;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -17,8 +18,8 @@ import javax.swing.Timer;
 public class Board extends JPanel implements ActionListener {
 
 	private Timer timer;
-	private final int FRAMES_PER_SECOND = 10;
-	private final int DELAY = 1000 / FRAMES_PER_SECOND; // ms
+	private final int MOVEMENTS_PER_SECOND = 11;
+	private final int DELAY = 1000 / MOVEMENTS_PER_SECOND; // ms
 	private Image background;
 
 	private final int GRID_WIDTH = 28*5; // The width of the original game was 28 tiles. We've decided to make it 5 times bigger.
@@ -34,11 +35,18 @@ public class Board extends JPanel implements ActionListener {
 
 	private static Board singleton = new Board();
 
-	private Blinky blinky = new Blinky();
+	/*private Blinky blinky = new Blinky();
 	private Inky inky = new Inky();
 	private Pinky pinky = new Pinky();
-	private Clyde clyde = new Clyde();
+	private Clyde clyde = new Clyde();*/
 	private Pacman pacman = new Pacman();
+	
+	private Sprite Ghosts[] = {
+			new Blinky(),
+			new Inky(),
+			new Pinky(),
+			new Clyde()
+	};
 
 	private Board() {
 		initTiles();
@@ -127,15 +135,24 @@ public class Board extends JPanel implements ActionListener {
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.drawImage(background, 0, 0, this);
 		
-		blinky.move();
-		inky.move();
-		pinky.move();
-		clyde.move();
-
-		g2d.drawImage(blinky.getImage(), convertX(blinky.getX()), convertY(blinky.getY()), this);
-		g2d.drawImage(inky.getImage(), convertX(inky.getX()), convertY(inky.getY()), this);
-		g2d.drawImage(pinky.getImage(), convertX(pinky.getX()), convertY(pinky.getY()), this);
-		g2d.drawImage(clyde.getImage(), convertX(clyde.getX()), convertY(clyde.getY()), this);
+		for (int i = 0; i < Ghosts.length; i++) {
+			Ghosts[i].move();
+			
+			//System.out.println(Ghosts[i]);
+			g2d.drawImage(Ghosts[i].getImage(), convertX(Ghosts[i].getX()), convertY(Ghosts[i].getY()), this);
+			
+			if (Ghosts[i].direction == Direction.Up) {
+				g2d.drawImage(new ImageIcon("Pacman/src/resources/eyes_up.png").getImage(), convertX(Ghosts[i].getX()), convertY(Ghosts[i].getY()), this);
+			} else if (Ghosts[i].direction == Direction.Left) {
+				g2d.drawImage(new ImageIcon("Pacman/src/resources/eyes_left.png").getImage(), convertX(Ghosts[i].getX()), convertY(Ghosts[i].getY()), this);
+			} else if (Ghosts[i].direction == Direction.Down) {
+				g2d.drawImage(new ImageIcon("Pacman/src/resources/eyes_down.png").getImage(), convertX(Ghosts[i].getX()), convertY(Ghosts[i].getY()), this);
+			} else if (Ghosts[i].direction == Direction.Right) {
+				g2d.drawImage(new ImageIcon("Pacman/src/resources/eyes_right.png").getImage(), convertX(Ghosts[i].getX()), convertY(Ghosts[i].getY()), this);
+			} else {
+				System.out.println(Ghosts[i] + "has no direction!");
+			}
+		}
 		// Coordinates are starting positions of the sprite
 		g2d.drawImage(pacman.getImage(), 182, 312, this);
 	}

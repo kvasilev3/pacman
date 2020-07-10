@@ -6,6 +6,7 @@ import javax.swing.ImageIcon;
 public class Inky extends Ghost {
 	
 	public Inky() {
+		//Starting Position
 		x = 7;
 		y = 7;
 		direction = Direction.Right;
@@ -17,6 +18,7 @@ public class Inky extends Ghost {
 			};
 	private int i = 0;
 
+	@Override
 	public Image getImage() {
 		i++;
 		if (i >= cyanGhost.length) {

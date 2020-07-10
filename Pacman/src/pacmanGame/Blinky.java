@@ -6,9 +6,10 @@ import javax.swing.ImageIcon;
 public class Blinky extends Ghost {
 	
 	public Blinky() {
-		x = 70;
+		//Starting Position
+		x = 69;
 		y = 57;
-		direction = Direction.Right;
+		direction = Direction.Left;
 	}
 
 	private Image[] redGhost = {
@@ -17,6 +18,7 @@ public class Blinky extends Ghost {
 			};
 	private int i = 0;
 
+	@Override
 	public Image getImage() {
 		i++;
 		if (i >= redGhost.length) {

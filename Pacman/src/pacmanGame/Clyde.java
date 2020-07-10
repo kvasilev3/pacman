@@ -6,6 +6,7 @@ import javax.swing.ImageIcon;
 public class Clyde extends Ghost {
 
 	public Clyde() {
+		//Starting Position
 		x = 7;
 		y = 7;
 		direction = Direction.Up;
@@ -17,6 +18,7 @@ public class Clyde extends Ghost {
 	};
 	private int i = 0;
 	
+	@Override
 	public Image getImage() {
 		i++;
 		if (i >= yellowGhost.length) {
@@ -24,12 +26,4 @@ public class Clyde extends Ghost {
 		}
 		return yellowGhost[i];
 	}
-	
-	/*public static int getX() {
-		return 207;
-	}
-	
-	public static int getY() {
-		return 188;
-	}*/
 }

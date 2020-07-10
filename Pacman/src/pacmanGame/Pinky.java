@@ -6,6 +6,7 @@ import javax.swing.ImageIcon;
 public class Pinky extends Ghost {
 
 	public Pinky() {
+		//Starting Position
 		x = 7;
 		y = 7;
 		direction = Direction.Down;
@@ -17,6 +18,7 @@ public class Pinky extends Ghost {
 	};
 	
 	private int i = 0;
+	@Override
 	public Image getImage() {
 		i++;
 		if (i >= pinkGhost.length) {
