@@ -7,9 +7,9 @@ public class Inky extends Ghost {
 	
 	public Inky() {
 		//Starting Position
-		x = 7;
-		y = 7;
-		direction = Direction.Right;
+		x = 132; //55
+		y = 147; //71
+		direction = Direction.Up;
 	}
 	
 	private Image[] cyanGhost = {
