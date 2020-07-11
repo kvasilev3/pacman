@@ -1,95 +1,36 @@
 package pacmanGame;
 
 public class TargettingSystem {
-	private void test() {
-		int currentX = 105; //sample values 
-		int currentY = 223; //sample values 
-		
+	private void decideNextStop(int currentX, int currentY, Direction direction, int tatgetX, int targetY) {
+		 
 		boolean upperTileIsAvailable = Board.getSingleton().isTileWalkable(currentX, currentY - 1);
 		boolean rightTileIsAvailable = Board.getSingleton().isTileWalkable(currentX + 1, currentY);
 		boolean downTileIsAvailable = Board.getSingleton().isTileWalkable(currentX, currentY + 1);
 		boolean leftTileIsAvailable = Board.getSingleton().isTileWalkable(currentX - 1, currentY);
 		
-		int availablePathsCount = 0;
-		if (upperTileIsAvailable) availablePathsCount += 1;
-		if (rightTileIsAvailable) availablePathsCount += 2;
-		if (downTileIsAvailable) availablePathsCount += 4;
-		if (leftTileIsAvailable) availablePathsCount += 8;
+		int a = 0x20;
 		
-//		if (upperTileIsAvailable) availablePathsCount |= 0x01;
-//		if (rightTileIsAvailable) availablePathsCount |= 0x02;
-//		if (downTileIsAvailable) availablePathsCount |= 0x04;
-//		if (leftTileIsAvailable) availablePathsCount |= 0x08;
-		
-		
+		int availablePathsFlags = 0;
+		if (direction != Direction.Up && downTileIsAvailable) availablePathsFlags += 1;
+		if (direction != Direction.Right && leftTileIsAvailable) availablePathsFlags += 2;
+		if (direction != Direction.Down && upperTileIsAvailable) availablePathsFlags += 4;
+		if (direction != Direction.Left && rightTileIsAvailable) availablePathsFlags += 8;
 	
-		if (availablePathsCount == 1)	{
+		if (availablePathsFlags == 1)	{
 			currentY -= 1;
 		}
-		else if (availablePathsCount == 2)	{
+		else if (availablePathsFlags == 2)	{
 			currentX += 1;
 		}
-		else if (availablePathsCount == 4)	{
+		else if (availablePathsFlags == 4)	{
 			currentY += 1;
 		}
-		else if (availablePathsCount == 8)	{
+		else if (availablePathsFlags == 8)	{
 			currentX -= 1;
 		}
-		//^^ for only 1 available tile
-		
-		
-		else if (availablePathsCount == 3)	{
-			
+		else {
+			// Choose random path
 		}
-		else if (availablePathsCount == 5)	{
-			
-		}
-		else if (availablePathsCount == 9)	{
-			
-		}
-		else if (availablePathsCount == 6)	{
-			
-		}
-		else if (availablePathsCount == 10){
-			
-		}
-		else if (availablePathsCount == 12)	{
-			
-		}
-		//^^ for 2 available tiles
-		
-		
-		else if (availablePathsCount == 7)	{
-			
-		}
-		else if (availablePathsCount == 11)	{
-			
-		}
-		else if (availablePathsCount == 13)	{
-			
-		}
-		else if (availablePathsCount == 14)	{
-			
-		}
-		//^^ for 3 available tiles
-		
-		
-		else if (availablePathsCount == 15){
-			
-		}
-		//^^ if all 4 tiles available
-		
-
-		
-		
-		
-		
-		
-//		if (Board.getSingleton().isTileWalkable(currentX, currentY)) {
-//			// true logic
-//		} else {
-//			// false logic
-//		}
 	}
 
 	private double distanceFromUpper(int currentX, int currentY, int targetX, int targetY) {

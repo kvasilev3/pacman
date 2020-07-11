@@ -41,7 +41,7 @@ public class Board extends JPanel implements ActionListener {
 	private Clyde clyde = new Clyde();*/
 	private Pacman pacman = new Pacman();
 	
-	private Sprite Ghosts[] = {
+	private Sprite ghosts[] = {
 			new Blinky(),
 			new Inky(),
 			new Pinky(),
@@ -135,29 +135,29 @@ public class Board extends JPanel implements ActionListener {
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.drawImage(background, 0, 0, this);
 		
-		for (int i = 0; i < Ghosts.length; i++) {
-			Ghosts[i].move();
+		for (int i = 0; i < ghosts.length; i++) {
+			ghosts[i].move();
 			
-			if (Ghosts[i].getX() == 0 && Ghosts[i].getY() == 72 && Ghosts[i].direction == Direction.Left) {
-				Ghosts[i].setX(138);
-				Ghosts[i].setY(72);
-			} else if (Ghosts[i].getX() == 139 && Ghosts[i].getY() == 72 && Ghosts[i].direction == Direction.Right) {
-				Ghosts[i].setX(1);
-				Ghosts[i].setY(72);
+			if (ghosts[i].getX() == 0 && ghosts[i].getY() == 72 && ghosts[i].direction == Direction.Left) {
+				ghosts[i].setX(138);
+				ghosts[i].setY(72);
+			} else if (ghosts[i].getX() == 139 && ghosts[i].getY() == 72 && ghosts[i].direction == Direction.Right) {
+				ghosts[i].setX(1);
+				ghosts[i].setY(72);
 			}
 			
-			g2d.drawImage(Ghosts[i].getImage(), convertX(Ghosts[i].getX()), convertY(Ghosts[i].getY()), this);
+			g2d.drawImage(ghosts[i].getImage(), convertX(ghosts[i].getX()), convertY(ghosts[i].getY()), this);
 			
-			if (Ghosts[i].direction == Direction.Up) {
-				g2d.drawImage(new ImageIcon("Pacman/src/resources/eyes_up.png").getImage(), convertX(Ghosts[i].getX()), convertY(Ghosts[i].getY()), this);
-			} else if (Ghosts[i].direction == Direction.Left) {
-				g2d.drawImage(new ImageIcon("Pacman/src/resources/eyes_left.png").getImage(), convertX(Ghosts[i].getX()), convertY(Ghosts[i].getY()), this);
-			} else if (Ghosts[i].direction == Direction.Down) {
-				g2d.drawImage(new ImageIcon("Pacman/src/resources/eyes_down.png").getImage(), convertX(Ghosts[i].getX()), convertY(Ghosts[i].getY()), this);
-			} else if (Ghosts[i].direction == Direction.Right) {
-				g2d.drawImage(new ImageIcon("Pacman/src/resources/eyes_right.png").getImage(), convertX(Ghosts[i].getX()), convertY(Ghosts[i].getY()), this);
+			if (ghosts[i].direction == Direction.Up) {
+				g2d.drawImage(new ImageIcon("Pacman/src/resources/eyes_up.png").getImage(), convertX(ghosts[i].getX()), convertY(ghosts[i].getY()), this);
+			} else if (ghosts[i].direction == Direction.Left) {
+				g2d.drawImage(new ImageIcon("Pacman/src/resources/eyes_left.png").getImage(), convertX(ghosts[i].getX()), convertY(ghosts[i].getY()), this);
+			} else if (ghosts[i].direction == Direction.Down) {
+				g2d.drawImage(new ImageIcon("Pacman/src/resources/eyes_down.png").getImage(), convertX(ghosts[i].getX()), convertY(ghosts[i].getY()), this);
+			} else if (ghosts[i].direction == Direction.Right) {
+				g2d.drawImage(new ImageIcon("Pacman/src/resources/eyes_right.png").getImage(), convertX(ghosts[i].getX()), convertY(ghosts[i].getY()), this);
 			} else {
-				System.out.println(Ghosts[i] + "has no direction!");
+				System.out.println(ghosts[i] + "has no direction!");
 			}
 		}
 		// Coordinates are starting positions of the sprite
