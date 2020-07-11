@@ -1,9 +1,7 @@
 package pacmanGame;
 
 public class TargettingSystem {
-	private void test() {
-		int currentX = 105; //sample values 
-		int currentY = 223; //sample values 
+	private void test(int currentX, int currentY, int targetX, int targetY) {
 		
 		boolean upperTileIsAvailable = Board.getSingleton().isTileWalkable(currentX, currentY - 1);
 		boolean rightTileIsAvailable = Board.getSingleton().isTileWalkable(currentX + 1, currentY);
@@ -39,7 +37,8 @@ public class TargettingSystem {
 		
 		
 		else if (availablePathsCount == 3)	{
-			
+			distanceFromUpper(currentX, currentY,targetX, targetY);
+			distanceFromRight(currentX, currentY,targetX, targetY);
 		}
 		else if (availablePathsCount == 5)	{
 			
@@ -74,15 +73,11 @@ public class TargettingSystem {
 		//^^ for 3 available tiles
 		
 		
-		else if (availablePathsCount == 15){
+		else if (availablePathsCount == 14)	{
 			
 		}
 		//^^ if all 4 tiles available
-		
-
-		
-		
-		
+	
 		
 		
 //		if (Board.getSingleton().isTileWalkable(currentX, currentY)) {
@@ -93,6 +88,15 @@ public class TargettingSystem {
 	}
 
 	private double distanceFromUpper(int currentX, int currentY, int targetX, int targetY) {
-		return Math.sqrt(Math.pow(targetX - currentX, 2) + Math.pow(targetY - currentY, 2));
+		return Math.sqrt(Math.pow(targetX - currentX, 2) + Math.pow(targetY - (currentY - 1), 2));
+	}
+	private double distanceFromRight(int currentX, int currentY, int targetX, int targetY) {
+		return Math.sqrt(Math.pow(targetX - (currentX + 1), 2) + Math.pow(targetY - currentY, 2));
+	}
+	private double distanceFromDown(int currentX, int currentY, int targetX, int targetY) {
+		return Math.sqrt(Math.pow(targetX - currentX, 2) + Math.pow(targetY - (currentY + 1), 2));
+	}
+	private double distanceFromLeft(int currentX, int currentY, int targetX, int targetY) {
+		return Math.sqrt(Math.pow(targetX - (currentX - 1), 2) + Math.pow(targetY - currentY, 2));
 	}
 }
