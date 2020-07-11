@@ -4,6 +4,16 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 
 public class Pacman extends Sprite {
+	
+	private Direction nextDirection = Direction.Down;
+	private Direction currentDirection = Direction.Left;
+	
+	public Pacman() {
+		//Starting Position
+		x = 7;
+		y = 7;
+		direction = Direction.Down;
+	}
 
 	private Image[] yellowMan = {
 			new ImageIcon("Pacman/src/resources/pacman.png").getImage(),
@@ -19,5 +29,17 @@ public class Pacman extends Sprite {
 			i = 0;
 		}
 		return yellowMan[i];
+	}
+	
+	public void setNextDirection(Direction direction) {
+		nextDirection = direction;
+	}
+	
+	@Override
+	protected void move() {
+		// Check for intersection
+		// Check for walkable tiles
+		this.x += nextDirection.getDeltaX();
+		this.y += nextDirection.getDeltaY();
 	}
 }

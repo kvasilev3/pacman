@@ -35,17 +35,31 @@ public class TargettingSystem {
 		}
 		
 	}
-
-	private double distanceFromUpper(int currentX, int currentY, int targetX, int targetY) {
-		return Math.sqrt(Math.pow(targetX - currentX, 2) + Math.pow(targetY - (currentY - 1), 2));
+	
+	private double distanceToTarget(int currentX, int currentY, int targetX, int targetY) {
+		return Math.sqrt(Math.pow(targetX - currentX, 2) + Math.pow(targetY - (currentY), 2));
 	}
-	private double distanceFromRight(int currentX, int currentY, int targetX, int targetY) {
-		return Math.sqrt(Math.pow(targetX - (currentX + 1), 2) + Math.pow(targetY - currentY, 2));
-	}
-	private double distanceFromDown(int currentX, int currentY, int targetX, int targetY) {
-		return Math.sqrt(Math.pow(targetX - currentX, 2) + Math.pow(targetY - (currentY + 1), 2));
-	}
-	private double distanceFromLeft(int currentX, int currentY, int targetX, int targetY) {
-		return Math.sqrt(Math.pow(targetX - (currentX - 1), 2) + Math.pow(targetY - currentY, 2));
+	
+	public Direction findMinPath(int currentX, int currentY, int targetX, int targetY) {
+		Direction directions[] = new Direction[4];
+		directions[0] = Direction.Up;
+		directions[1] = Direction.Right;
+		directions[2] = Direction.Down;
+		directions[3] = Direction.Left;
+		
+		Direction directionWithMinDistance = Direction.Up;
+		double minDistance = 1000000;
+		
+		for (int i=0; i<directions.length; i++) {
+			if (Board.getSingleton().isTileWalkable(currentX + directions[i].getDeltaX(), currentY - directions[i].getDeltaY())) {
+				double currentDistance = distanceToTarget(currentX + directions[i].getDeltaX(), currentY - directions[i].getDeltaY(), targetX, targetY);
+				if (minDistance > currentDistance) {
+					minDistance = currentDistance;
+					directionWithMinDistance = directions[i];
+				}
+			}
+		}
+		
+		return directionWithMinDistance;
 	}
 }

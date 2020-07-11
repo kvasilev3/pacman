@@ -5,6 +5,8 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -49,6 +51,8 @@ public class Board extends JPanel implements ActionListener {
 	};
 
 	private Board() {
+		
+		addKeyListener(new TAdapter());
 		initTiles();
 		
 		ImageIcon ii = new ImageIcon("Pacman/src/resources/maze.png");
@@ -135,6 +139,8 @@ public class Board extends JPanel implements ActionListener {
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.drawImage(background, 0, 0, this);
 		
+		
+		
 		for (int i = 0; i < ghosts.length; i++) {
 			ghosts[i].move();
 			
@@ -160,8 +166,10 @@ public class Board extends JPanel implements ActionListener {
 				System.out.println(ghosts[i] + "has no direction!");
 			}
 		}
+		
+		pacman.move();
 		// Coordinates are starting positions of the sprite
-		g2d.drawImage(pacman.getImage(), 182, 312, this);
+		g2d.drawImage(pacman.getImage(), convertX(pacman.getX()), convertY(pacman.getY()), this);
 	}
 	
 	private int convertX(int x) {
@@ -177,4 +185,20 @@ public class Board extends JPanel implements ActionListener {
 		repaint();
 	}
 
+	private class TAdapter extends KeyAdapter {
+
+        //@Override
+        //public void keyReleased(KeyEvent e) {
+        //    
+        //}
+
+        @Override
+        public void keyPressed(KeyEvent e) {
+        	if (e.getKeyCode() == KeyEvent.VK_UP) {
+            	pacman.setNextDirection(Direction.Up);
+            } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+            	pacman.setNextDirection(Direction.Down);
+            }
+        }
+    }
 }
