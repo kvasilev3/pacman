@@ -10,9 +10,9 @@ public class Pacman extends Sprite {
 	
 	public Pacman() {
 		//Starting Position
-		x = 7;
-		y = 7;
-		direction = Direction.Down;
+		x = 70;
+		y = 117;
+		direction = Direction.Left;
 	}
 
 	private Image[] yellowMan = {

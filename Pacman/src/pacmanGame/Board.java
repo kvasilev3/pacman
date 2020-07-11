@@ -180,7 +180,6 @@ public class Board extends JPanel implements ActionListener {
 		}
 		
 		pacman.move();
-		// Coordinates are starting positions of the sprite
 		g2d.drawImage(pacman.getImage(), convertX(pacman.getX()), convertY(pacman.getY()), this);
 	}
 	
