@@ -13,8 +13,12 @@ import java.io.IOException;
 import java.lang.reflect.Array;
 
 import javax.imageio.ImageIO;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.ImageIcon;
+import javax.swing.JComponent;
 import javax.swing.JPanel;
+import javax.swing.KeyStroke;
 import javax.swing.Timer;
 
 public class Board extends JPanel implements ActionListener {
@@ -52,7 +56,8 @@ public class Board extends JPanel implements ActionListener {
 
 	private Board() {
 		
-		addKeyListener(new TAdapter());
+		mapKeys();
+		
 		initTiles();
 		
 		ImageIcon ii = new ImageIcon("Pacman/src/resources/maze.png");
@@ -62,32 +67,39 @@ public class Board extends JPanel implements ActionListener {
 		timer.start();
 	}
 	
+	private void mapKeys() {
+		getInputMap(JComponent.WHEN_FOCUSED).put(KeyStroke.getKeyStroke("UP"), "moveUp");
+		getInputMap(JComponent.WHEN_FOCUSED).put(KeyStroke.getKeyStroke("LEFT"), "moveLeft");
+		getInputMap(JComponent.WHEN_FOCUSED).put(KeyStroke.getKeyStroke("DOWN"), "moveDown");
+		getInputMap(JComponent.WHEN_FOCUSED).put(KeyStroke.getKeyStroke("RIGHT"), "moveRight");
+		getActionMap().put("moveUp", new AbstractAction() {
+		    public void actionPerformed(ActionEvent e) {
+		    	pacman.setNextDirection(Direction.Up);
+		    }
+		});
+		getActionMap().put("moveLeft", new AbstractAction() {
+		    public void actionPerformed(ActionEvent e) {
+		    	pacman.setNextDirection(Direction.Left);
+		    }
+		});
+		getActionMap().put("moveDown", new AbstractAction() {
+		    public void actionPerformed(ActionEvent e) {
+		    	pacman.setNextDirection(Direction.Down);
+		    }
+		});
+		getActionMap().put("moveRight", new AbstractAction() {
+		    public void actionPerformed(ActionEvent e) {
+		    	pacman.setNextDirection(Direction.Right);
+		    }
+		});
+	}
+	
 	private void initTiles() {
 		final int BLUE = 0xFF0000FF;
 		final int GREEN = 0xFF00FF00;
 		final int RED = 0xFFFF0000;
 		
 		tiles = new int[GRID_HEIGHT][GRID_WIDTH];
-		
-		/*// Sample values
-		tiles[2][2] = TILE_HAS_POWER_PELLET;
-		tiles[2][3] = TILE_IS_WALKABLE;
-		tiles[2][4] = TILE_IS_WALKABLE;
-		tiles[2][5] = TILE_IS_WALKABLE;
-		tiles[2][6] = TILE_IS_WALKABLE;
-		
-		tiles[2][7] = TILE_HAS_PELLET;
-		tiles[3][7] = TILE_IS_WALKABLE;
-		tiles[4][7] = TILE_IS_WALKABLE;
-		tiles[5][7] = TILE_IS_WALKABLE;
-		tiles[6][7] = TILE_IS_WALKABLE;
-		
-		tiles[7][2] = TILE_HAS_PELLET;
-		tiles[7][3] = TILE_IS_WALKABLE;
-		tiles[7][4] = TILE_IS_WALKABLE;
-		tiles[7][5] = TILE_IS_WALKABLE;
-		tiles[7][6] = TILE_IS_WALKABLE;
-		tiles[7][7] = TILE_HAS_PELLET;*/
 		
 		File imageFile = new File("Pacman/src/resources/tiles.png");
 		BufferedImage image = null;
@@ -184,21 +196,4 @@ public class Board extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		repaint();
 	}
-
-	private class TAdapter extends KeyAdapter {
-
-        //@Override
-        //public void keyReleased(KeyEvent e) {
-        //    
-        //}
-
-        @Override
-        public void keyPressed(KeyEvent e) {
-        	if (e.getKeyCode() == KeyEvent.VK_UP) {
-            	pacman.setNextDirection(Direction.Up);
-            } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-            	pacman.setNextDirection(Direction.Down);
-            }
-        }
-    }
 }

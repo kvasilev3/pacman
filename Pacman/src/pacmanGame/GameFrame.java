@@ -13,7 +13,9 @@ public class GameFrame extends JFrame {
 	
 	private void initUI() {
 
-		add(Board.getSingleton());
+		Board board = Board.getSingleton();
+		add(board);
+		//board.setFocusable(true);
 		
         setTitle("Pacman original 2.0");
         setSize(392, 457);
@@ -22,7 +24,7 @@ public class GameFrame extends JFrame {
         setIconImage(myAppImage.getImage());
         
         setLocationRelativeTo(null);
-        setResizable(false); //Temporary (Will be switched to true when main game is done)
+        setResizable(true); //Temporary (Will be switched to true when main game is done)
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
        
     }
