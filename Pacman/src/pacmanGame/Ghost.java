@@ -8,6 +8,11 @@ import javax.swing.ImageIcon;
 
 public class Ghost extends Sprite {
 	private Random random = new Random();
+	protected String mode = "SCATTER";
+	protected int scatterX = 0;
+	protected int scatterY = 0;
+	protected int chaseX = 0;
+	protected int chaseY = 0;
 	protected Image[] frightenedGhost = {
 			new ImageIcon("Pacman/src/resources/escaping_ghost_1.png").getImage(),
 			new ImageIcon("Pacman/src/resources/escaping_ghost_2.png").getImage()
@@ -70,12 +75,17 @@ public class Ghost extends Sprite {
 	}
 
 	@Override
-	protected void move() {
+	protected void move(Sprite pacman, Sprite blinky) {
 		Direction possibleDirections[] = getPossibleDirections(x, y, direction);
 
 		if (possibleDirections.length < 1) {
 			return;
 		} else if (possibleDirections.length == 1) {
+			if (getMode() == "EATEN") {
+				if (x == 70 && y == 57) {
+					setMode("CHASE");
+				}
+			}
 			this.x += possibleDirections[0].getDeltaX();
 			this.y += possibleDirections[0].getDeltaY();
 			this.direction = possibleDirections[0];
@@ -93,13 +103,20 @@ public class Ghost extends Sprite {
 				this.direction = minPathScatter;
 				
 			} else if (getMode() == "CHASE") {
-				this.direction = ts.findMinPath(x, y, getChaseX(), getChaseY(), direction);
+				Direction minPathChase = ts.findMinPath(x, y, getChaseX(pacman, blinky), getChaseY(pacman, blinky), direction);
+				this.x += minPathChase.getDeltaX();
+				this.y += minPathChase.getDeltaY();
+				this.direction = minPathChase;
 				
 			} else if (getMode() == "EATEN") {
 				if (x == 70 && y == 57) {
-					setMode("GHOSTHOUSE");
+					setMode("CHASE");
+				} else {
+					Direction minPathEaten = ts.findMinPath(x, y, 70, 57, direction);
+					this.x += minPathEaten.getDeltaX();
+					this.y += minPathEaten.getDeltaY();
+					this.direction = minPathEaten;
 				}
-				this.direction = ts.findMinPath(x, y, 70, 57, direction);
 				
 			} else if (getMode() == "GHOSTHOUSE") {
 				
@@ -108,5 +125,35 @@ public class Ghost extends Sprite {
 				//TODO: Exception - No Mode
 			}
 		}
+	}
+	
+	@Override
+	public String getMode() {
+		return mode;
+	}
+	
+	@Override
+	public void setMode(String givenMode) {
+		mode = givenMode;
+	}
+	
+	@Override
+	public int getScatterX() {
+		return scatterX;
+	}
+	
+	@Override
+	public int getScatterY() {
+		return scatterY;
+	}
+	
+	@Override
+	public int getChaseX(Sprite pacman, Sprite blinky) {
+		return chaseX;
+	}
+	
+	@Override
+	public int getChaseY(Sprite pacman, Sprite blinky) {
+		return chaseY;
 	}
 }

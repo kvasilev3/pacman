@@ -5,16 +5,11 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Array;
-
 import javax.imageio.ImageIO;
 import javax.swing.AbstractAction;
-import javax.swing.Action;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
@@ -216,7 +211,7 @@ public class Board extends JPanel {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			pacman.move();
+			pacman.move(pacman, ghosts[0]);
 			
 			if (pacman.getX() == 0 && pacman.getY() == 72 && pacman.direction == Direction.Left) {
 				pacman.setX(138);
@@ -232,7 +227,10 @@ public class Board extends JPanel {
 			} else if (tiles[pacman.getY()][pacman.getX()] == TILE_HAS_POWER_PELLET) {
 				tiles[pacman.getY()][pacman.getX()] = TILE_NO_PELLET;
 				score += 50;
-				// TODO: Change the mode to frightened
+				for (int i = 0; i < ghosts.length; i++) {
+					ghosts[i].setMode("FRIGHTENED");
+					ghosts[i].direction = ghosts[i].direction.oppositeDirection();
+				}
 				System.out.println("Score: " + score);
 			}
 		}
@@ -243,7 +241,7 @@ public class Board extends JPanel {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			for (int i = 0; i < ghosts.length; i++) {
-				ghosts[i].move();
+				ghosts[i].move(pacman, ghosts[0]);
 				
 				if (ghosts[i].getX() == 0 && ghosts[i].getY() == 72 && ghosts[i].direction == Direction.Left) {
 					ghosts[i].setX(138);
@@ -253,7 +251,13 @@ public class Board extends JPanel {
 					ghosts[i].setY(72);
 				}
 				if (Math.abs(ghosts[i].getX() - pacman.getX()) < 2 && Math.abs(ghosts[i].getY() - pacman.getY()) < 2) {
-					System.out.println("Pacman was eaten");
+					if (ghosts[i].getMode() == "FRIGHTENED") {
+						ghosts[i].setMode("EATEN");
+						score += 200;
+					} else if (ghosts[i].getMode() == "EATEN") {
+					} else {
+						System.out.println("Pacman was eaten");
+					}
 				}
 			}
 		}

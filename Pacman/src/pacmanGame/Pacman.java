@@ -89,7 +89,7 @@ public class Pacman extends Sprite {
 	}
 	
 	@Override
-	protected void move() {
+	protected void move(Sprite pacman, Sprite blinky) {
 		// Check for intersection
 		// Check for walkable tiles
 		Direction[] possibleDirections = getPossibleDirections(x, y);

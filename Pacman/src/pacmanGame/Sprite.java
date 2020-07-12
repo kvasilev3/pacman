@@ -23,7 +23,7 @@ public class Sprite {
 		this.y = y;
 	}
 	
-	protected void move() {
+	protected void move(Sprite pacman, Sprite blinky) {
 		
 	}
 	
@@ -35,11 +35,11 @@ public class Sprite {
 		return 0;
 	}
 	
-	public int getChaseX() {
+	public int getChaseX(Sprite pacman, Sprite blinky) {
 		return 0;
 	}
 	
-	public int getChaseY() {
+	public int getChaseY(Sprite pacman, Sprite blinky) {
 		return 0;
 	}
 

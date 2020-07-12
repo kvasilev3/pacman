@@ -5,12 +5,7 @@ import javax.swing.ImageIcon;
 
 public class Inky extends Ghost {
 	
-	private String mode = "SCATTER";
 	private int i = 0;
-	private int scatterX = 135;
-	private int scatterY = 155;
-	private int chaseX = 0;
-	private int chaseY = 0;
 	private Image[] cyanGhost = {
 			new ImageIcon("Pacman/src/resources/inky_1.png").getImage(),
 			new ImageIcon("Pacman/src/resources/inky_2.png").getImage()
@@ -21,35 +16,47 @@ public class Inky extends Ghost {
 		x = 132; //55
 		y = 147; //71
 		direction = Direction.Up;
+		
+		scatterX = 135;
+		scatterY = 155;
+		mode = "CHASE";
 	}
 	
 	@Override
-	public String getMode() {
-		return mode;
-	}
-	
-	@Override
-	public void setMode(String givenMode) {
-		mode = givenMode;
-	}
-	
-	@Override
-	public int getScatterX() {
-		return scatterX;
-	}
-	
-	@Override
-	public int getScatterY() {
-		return scatterY;
-	}
-	
-	@Override
-	public int getChaseX() {
+	public int getChaseX(Sprite pacman, Sprite blinky) {
+		int blinkyX = blinky.getX();
+		if (pacman.direction == Direction.Up) {
+			chaseX = pacman.getX() - 2;
+		} else if (pacman.direction == Direction.Left) {
+			chaseX = pacman.getX() - 2;
+		} else if (pacman.direction == Direction.Down) {
+			chaseX = pacman.getX();
+		} else if (pacman.direction == Direction.Right) {
+			chaseX = pacman.getX() + 2;
+		}
+		
+		int distanceToBlinky = chaseX - blinkyX;
+		chaseX = chaseX + distanceToBlinky;
+		
 		return chaseX;
 	}
 	
 	@Override
-	public int getChaseY() {
+	public int getChaseY(Sprite pacman, Sprite blinky) {
+		int blinkyY = blinky.getY();
+		if (pacman.direction == Direction.Up) {
+			chaseY = pacman.getY() - 2;
+		} else if (pacman.direction == Direction.Left) {
+			chaseY = pacman.getY();
+		} else if (pacman.direction == Direction.Down) {
+			chaseY = pacman.getY() + 2;
+		} else if (pacman.direction == Direction.Right) {
+			chaseY = pacman.getY() ;
+		}
+
+		int distanceToBlinky = chaseX - blinkyY;
+		chaseY = chaseY + distanceToBlinky;
+		
 		return chaseY;
 	}
 
@@ -61,7 +68,9 @@ public class Inky extends Ghost {
 				i = 0;
 			}
 			return frightenedGhost[i];
-		} else {
+		} else if (mode == "EATEN") {
+			return null;
+		}else {
 			if (i >= cyanGhost.length) {
 				i = 0;
 			}

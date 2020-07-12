@@ -47,13 +47,7 @@ public class TargettingSystem {
 		directions[2] = Direction.Down;
 		directions[3] = Direction.Left;
 		
-		Direction oppositeDirection;
-		switch (direction) {
-			case Up: oppositeDirection = Direction.Down; break;
-			case Left: oppositeDirection = Direction.Right; break;
-			case Down: oppositeDirection = Direction.Up; break;
-			default: oppositeDirection = Direction.Left; break;
-		}
+		Direction oppositeDirection = direction.oppositeDirection();
 		
 		Direction directionWithMinDistance = Direction.Up;
 		double minDistance = 1000000;

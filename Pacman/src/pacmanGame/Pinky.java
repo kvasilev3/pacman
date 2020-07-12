@@ -5,12 +5,7 @@ import javax.swing.ImageIcon;
 
 public class Pinky extends Ghost {
 
-	private String mode = "SCATTER";
 	private int i = 0;
-	private int scatterX = 10;
-	private int scatterY = -20;
-	private int chaseX = 0;
-	private int chaseY = 0;
 	private Image[] pinkGhost = {
 			new ImageIcon("Pacman/src/resources/pinky_1.png").getImage(),
 			new ImageIcon("Pacman/src/resources/pinky_2.png").getImage()
@@ -21,35 +16,37 @@ public class Pinky extends Ghost {
 		x = 7; //70
 		y = 7; //73
 		direction = Direction.Down;
+		
+		scatterX = 10;
+		scatterY = -20;
+		mode = "CHASE";
 	}
 	
 	@Override
-	public String getMode() {
-		return mode;
-	}
-	
-	@Override
-	public void setMode(String givenMode) {
-		mode = givenMode;
-	}
-	
-	@Override
-	public int getScatterX() {
-		return scatterX;
-	}
-	
-	@Override
-	public int getScatterY() {
-		return scatterY;
-	}
-	
-	@Override
-	public int getChaseX() {
+	public int getChaseX(Sprite pacman, Sprite blinky) {
+		if (pacman.direction == Direction.Up) {
+			chaseX = pacman.getX() - 4;
+		} else if (pacman.direction == Direction.Left) {
+			chaseX = pacman.getX() - 4;
+		} else if (pacman.direction == Direction.Down) {
+			chaseX = pacman.getX();
+		} else if (pacman.direction == Direction.Right) {
+			chaseX = pacman.getX() + 4;
+		}
 		return chaseX;
 	}
 	
 	@Override
-	public int getChaseY() {
+	public int getChaseY(Sprite pacman, Sprite blinky) {
+		if (pacman.direction == Direction.Up) {
+			chaseY = pacman.getY() - 4;
+		} else if (pacman.direction == Direction.Left) {
+			chaseY = pacman.getY();
+		} else if (pacman.direction == Direction.Down) {
+			chaseY = pacman.getY() + 4;
+		} else if (pacman.direction == Direction.Right) {
+			chaseY = pacman.getY() ;
+		}
 		return chaseY;
 	}
 	
@@ -61,7 +58,9 @@ public class Pinky extends Ghost {
 				i = 0;
 			}
 			return frightenedGhost[i];
-		} else {
+		} else if (mode == "EATEN") {
+			return null;
+		}else {
 			if (i >= pinkGhost.length) {
 				i = 0;
 			}
