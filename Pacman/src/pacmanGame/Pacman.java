@@ -7,7 +7,7 @@ import javax.swing.ImageIcon;
 
 public class Pacman extends Sprite {
 	
-	private Direction nextDirection = Direction.Down;
+	private Direction nextDirection = Direction.Left;
 	
 	public Pacman() {
 		//Starting Position
@@ -96,15 +96,13 @@ public class Pacman extends Sprite {
 		for (int i = 0; i < possibleDirections.length; i++) {
 			if(nextDirection == possibleDirections[i]) {
 				direction = nextDirection;
-				this.x += direction.getDeltaX();
-				this.y += direction.getDeltaY();
 			}
-			else if (direction == possibleDirections[i]) {
+		}
+		for (int i = 0; i < possibleDirections.length; i++) {
+			if (direction == possibleDirections[i]) {
 				this.x += direction.getDeltaX();
 				this.y += direction.getDeltaY();
 			}
 		}
-		
-		
 	}
 }
