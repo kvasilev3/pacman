@@ -16,20 +16,53 @@ public class Pacman extends Sprite {
 		direction = Direction.Left;
 	}
 
-	private Image[] yellowMan = {
+	private Image[] yellowManLeft = {
+			new ImageIcon("Pacman/src/resources/pacman.png").getImage(),
+			new ImageIcon("Pacman/src/resources/pacman_left_1.png").getImage(),
+			new ImageIcon("Pacman/src/resources/pacman_left_2.png").getImage(),
+			new ImageIcon("Pacman/src/resources/pacman_left_1.png").getImage()
+			};
+	private Image[] yellowManRight = {
 			new ImageIcon("Pacman/src/resources/pacman.png").getImage(),
 			new ImageIcon("Pacman/src/resources/pacman_right_1.png").getImage(),
 			new ImageIcon("Pacman/src/resources/pacman_right_2.png").getImage(),
 			new ImageIcon("Pacman/src/resources/pacman_right_1.png").getImage()
 			};
+	private Image[] yellowManUp = {
+			new ImageIcon("Pacman/src/resources/pacman.png").getImage(),
+			new ImageIcon("Pacman/src/resources/pacman_up_1.png").getImage(),
+			new ImageIcon("Pacman/src/resources/pacman_up_2.png").getImage(),
+			new ImageIcon("Pacman/src/resources/pacman_up_1.png").getImage()
+			};
+	private Image[] yellowManDown = {
+			new ImageIcon("Pacman/src/resources/pacman.png").getImage(),
+			new ImageIcon("Pacman/src/resources/pacman_down_1.png").getImage(),
+			new ImageIcon("Pacman/src/resources/pacman_down_2.png").getImage(),
+			new ImageIcon("Pacman/src/resources/pacman_down_1.png").getImage()
+			};
 	private int i = 0;
 
 	public Image getImage() {
 		i++;
-		if (i >= yellowMan.length) {
+		if (i >= yellowManLeft.length) {
 			i = 0;
 		}
-		return yellowMan[i];
+		if (direction == Direction.Up) {
+			return yellowManUp[i];
+		}
+		else if (direction == Direction.Down) {
+			return yellowManDown[i];
+		}
+		else if (direction == Direction.Right) {
+			return yellowManRight[i];
+		}
+		else if (direction == Direction.Left) {
+			return yellowManLeft[i];
+		}
+		else {
+			return yellowManLeft[i];
+		}
+		
 	}
 	
 	public void setNextDirection(Direction direction) {
