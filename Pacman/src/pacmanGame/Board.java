@@ -21,12 +21,20 @@ import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 import javax.swing.Timer;
 
-public class Board extends JPanel implements ActionListener {
+public class Board extends JPanel {
 
-	private Timer timer;
-	private final int MOVEMENTS_PER_SECOND = 11;
-	private final int DELAY = 1000 / MOVEMENTS_PER_SECOND; // ms
+	private Timer pacmanTimer;
+	private Timer ghostsTimer;
+	private Timer redrawTimer;
+	private final int PACMAN_MOVEMENTS_PER_SECOND = 18;
+	private final int PACMAN_DELAY = 1000 / PACMAN_MOVEMENTS_PER_SECOND; // ms
+	private final int GHOSTS_MOVEMENTS_PER_SECOND = 13;
+	private final int GHOSTS_DELAY = 1000 / GHOSTS_MOVEMENTS_PER_SECOND; // ms
+	private final int REDRAW_PER_SECOND = 30;
+	private final int REDRAW_DELAY = 1000 / REDRAW_PER_SECOND; // ms
 	private Image background;
+	private Image pellet;
+	private Image powerPellet;
 
 	private final int GRID_WIDTH = 28*5; // The width of the original game was 28 tiles. We've decided to make it 5 times bigger.
 	private final int GRID_HEIGHT = 31*5; // The height of the original game was 31 tiles. We've decided to make it 5 times bigger. 
@@ -35,7 +43,7 @@ public class Board extends JPanel implements ActionListener {
 	private final int TILE_IS_WALKABLE = 1;
 	private final int TILE_HAS_PELLET = 2;
 	private final int TILE_HAS_POWER_PELLET = 3;
-	private final int TILE_PELLET_EATEN = 4;
+	private final int TILE_NO_PELLET = 4;
 	
 	private ImageIcon eyesUp = new ImageIcon("Pacman/src/resources/eyes_up.png");
 	private ImageIcon eyesLeft = new ImageIcon("Pacman/src/resources/eyes_left.png");
@@ -43,6 +51,7 @@ public class Board extends JPanel implements ActionListener {
 	private ImageIcon eyesRight = new ImageIcon("Pacman/src/resources/eyes_right.png");
 	
 	private int tiles[][] = new int[GRID_WIDTH][GRID_HEIGHT];
+	private int score = 0;
 
 	private static Board singleton = new Board();
 	
@@ -62,9 +71,21 @@ public class Board extends JPanel implements ActionListener {
 		
 		ImageIcon ii = new ImageIcon("Pacman/src/resources/maze.png");
 		background = ii.getImage();
+		
+		ii = new ImageIcon("Pacman/src/resources/pellet.png");
+		pellet = ii.getImage();
+		
+		ii = new ImageIcon("Pacman/src/resources/power_pellet.png");
+		powerPellet = ii.getImage();
 
-		timer = new Timer(DELAY, this);
-		timer.start();
+		pacmanTimer = new Timer(PACMAN_DELAY, new PacmanMoveListener());
+		pacmanTimer.start();
+		
+		ghostsTimer = new Timer(GHOSTS_DELAY, new GhostsMoveListener());
+		ghostsTimer.start();
+		
+		redrawTimer = new Timer(REDRAW_DELAY, new RedrawListener());
+		redrawTimer.start();
 	}
 	
 	private void mapKeys() {
@@ -151,18 +172,17 @@ public class Board extends JPanel implements ActionListener {
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.drawImage(background, 0, 0, this);
 		
-		
+		for (int y=0; y<GRID_HEIGHT; y++) {
+			for (int x=0; x<GRID_WIDTH; x++) {
+				if (tiles[y][x] == TILE_HAS_PELLET) {
+					g2d.drawImage(pellet, convertX(x)+11, convertY(y)+11, this);
+				} else if (tiles[y][x] == TILE_HAS_POWER_PELLET) {
+					g2d.drawImage(powerPellet, convertX(x)+5, convertY(y)+5, this);
+				}
+			}
+		}
 		
 		for (int i = 0; i < ghosts.length; i++) {
-			ghosts[i].move();
-			
-			if (ghosts[i].getX() == 0 && ghosts[i].getY() == 72 && ghosts[i].direction == Direction.Left) {
-				ghosts[i].setX(138);
-				ghosts[i].setY(72);
-			} else if (ghosts[i].getX() == 139 && ghosts[i].getY() == 72 && ghosts[i].direction == Direction.Right) {
-				ghosts[i].setX(1);
-				ghosts[i].setY(72);
-			}
 			
 			g2d.drawImage(ghosts[i].getImage(), convertX(ghosts[i].getX()), convertY(ghosts[i].getY()), this);
 			
@@ -181,17 +201,8 @@ public class Board extends JPanel implements ActionListener {
 			}
 		}
 		
-		pacman.move();
 		g2d.drawImage(pacman.getImage(), convertX(pacman.getX()), convertY(pacman.getY()), this);
-		
-		if (pacman.getX() == 0 && pacman.getY() == 72 && pacman.direction == Direction.Left) {
-			pacman.setX(138);
-			pacman.setY(72);
-		} else if (pacman.getX() == 139 && pacman.getY() == 72 && pacman.direction == Direction.Right) {
-			pacman.setX(1);
-			pacman.setY(72);
-		}
-	} 
+	}
 	
 	private int convertX(int x) {
 		return (int) (2.7571429 * (x-3));
@@ -201,8 +212,58 @@ public class Board extends JPanel implements ActionListener {
 		return (int) (2.76129 * (y-3));
 	}
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		repaint();
+	private class PacmanMoveListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			pacman.move();
+			
+			if (pacman.getX() == 0 && pacman.getY() == 72 && pacman.direction == Direction.Left) {
+				pacman.setX(138);
+				pacman.setY(72);
+			} else if (pacman.getX() == 139 && pacman.getY() == 72 && pacman.direction == Direction.Right) {
+				pacman.setX(1);
+				pacman.setY(72);
+			}
+			if (tiles[pacman.getY()][pacman.getX()] == TILE_HAS_PELLET) {
+				tiles[pacman.getY()][pacman.getX()] = TILE_NO_PELLET;
+				score += 10;
+				System.out.println("Score: " + score);
+			} else if (tiles[pacman.getY()][pacman.getX()] == TILE_HAS_POWER_PELLET) {
+				tiles[pacman.getY()][pacman.getX()] = TILE_NO_PELLET;
+				score += 50;
+				// TODO: Change the mode to frightened
+				System.out.println("Score: " + score);
+			}
+		}
+	}
+	
+	private class GhostsMoveListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			for (int i = 0; i < ghosts.length; i++) {
+				ghosts[i].move();
+				
+				if (ghosts[i].getX() == 0 && ghosts[i].getY() == 72 && ghosts[i].direction == Direction.Left) {
+					ghosts[i].setX(138);
+					ghosts[i].setY(72);
+				} else if (ghosts[i].getX() == 139 && ghosts[i].getY() == 72 && ghosts[i].direction == Direction.Right) {
+					ghosts[i].setX(1);
+					ghosts[i].setY(72);
+				}
+				if (Math.abs(ghosts[i].getX() - pacman.getX()) < 2 && Math.abs(ghosts[i].getY() - pacman.getY()) < 2) {
+					System.out.println("Pacman was eaten");
+				}
+			}
+		}
+	}
+	
+	private class RedrawListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			repaint();
+		}
 	}
 }
