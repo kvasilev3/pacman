@@ -183,7 +183,15 @@ public class Board extends JPanel implements ActionListener {
 		
 		pacman.move();
 		g2d.drawImage(pacman.getImage(), convertX(pacman.getX()), convertY(pacman.getY()), this);
-	}
+		
+		if (pacman.getX() == 0 && pacman.getY() == 72 && pacman.direction == Direction.Left) {
+			pacman.setX(138);
+			pacman.setY(72);
+		} else if (pacman.getX() == 139 && pacman.getY() == 72 && pacman.direction == Direction.Right) {
+			pacman.setX(1);
+			pacman.setY(72);
+		}
+	} 
 	
 	private int convertX(int x) {
 		return (int) (2.7571429 * (x-3));

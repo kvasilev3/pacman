@@ -1,10 +1,18 @@
 package pacmanGame;
 
+import java.awt.Image;
 import java.util.ArrayList;
 import java.util.Random;
+import javax.swing.ImageIcon;
+
 
 public class Ghost extends Sprite {
 	private Random random = new Random();
+	protected Image[] frightenedGhost = {
+			new ImageIcon("Pacman/src/resources/escaping_ghost_1.png").getImage(),
+			new ImageIcon("Pacman/src/resources/escaping_ghost_2.png").getImage()
+			};
+	private TargettingSystem ts = new TargettingSystem();
 
 	public Direction[] getPossibleDirections(int x, int y, Direction currentDirection) {
 		ArrayList<Direction> possibleDirections = new ArrayList<>();
@@ -72,10 +80,33 @@ public class Ghost extends Sprite {
 			this.y += possibleDirections[0].getDeltaY();
 			this.direction = possibleDirections[0];
 		} else {
-			int index = random.nextInt(possibleDirections.length);
-			this.x += possibleDirections[index].getDeltaX();
-			this.y += possibleDirections[index].getDeltaY();
-			this.direction = possibleDirections[index];
+			if (getMode() == "FRIGHTENED") {
+				int index = random.nextInt(possibleDirections.length);
+				this.x += possibleDirections[index].getDeltaX();
+				this.y += possibleDirections[index].getDeltaY();
+				this.direction = possibleDirections[index];
+				
+			} else if (getMode() == "SCATTER") {
+				Direction minPathScatter = ts.findMinPath(x, y, getScatterX(), getScatterY(), direction);
+				this.x += minPathScatter.getDeltaX();
+				this.y += minPathScatter.getDeltaY();
+				this.direction = minPathScatter;
+				
+			} else if (getMode() == "CHASE") {
+				this.direction = ts.findMinPath(x, y, getChaseX(), getChaseY(), direction);
+				
+			} else if (getMode() == "EATEN") {
+				if (x == 70 && y == 57) {
+					setMode("GHOSTHOUSE");
+				}
+				this.direction = ts.findMinPath(x, y, 70, 57, direction);
+				
+			} else if (getMode() == "GHOSTHOUSE") {
+				
+				
+			} else {
+				//TODO: Exception - No Mode
+			}
 		}
 	}
 }

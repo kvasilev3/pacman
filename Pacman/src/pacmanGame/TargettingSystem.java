@@ -40,19 +40,28 @@ public class TargettingSystem {
 		return Math.sqrt(Math.pow(targetX - currentX, 2) + Math.pow(targetY - (currentY), 2));
 	}
 	
-	public Direction findMinPath(int currentX, int currentY, int targetX, int targetY) {
+	public Direction findMinPath(int currentX, int currentY, int targetX, int targetY, Direction direction) {
 		Direction directions[] = new Direction[4];
 		directions[0] = Direction.Up;
 		directions[1] = Direction.Right;
 		directions[2] = Direction.Down;
 		directions[3] = Direction.Left;
 		
+		Direction oppositeDirection;
+		switch (direction) {
+			case Up: oppositeDirection = Direction.Down; break;
+			case Left: oppositeDirection = Direction.Right; break;
+			case Down: oppositeDirection = Direction.Up; break;
+			default: oppositeDirection = Direction.Left; break;
+		}
+		
 		Direction directionWithMinDistance = Direction.Up;
 		double minDistance = 1000000;
 		
 		for (int i=0; i<directions.length; i++) {
-			if (Board.getSingleton().isTileWalkable(currentX + directions[i].getDeltaX(), currentY - directions[i].getDeltaY())) {
-				double currentDistance = distanceToTarget(currentX + directions[i].getDeltaX(), currentY - directions[i].getDeltaY(), targetX, targetY);
+			if (directions[i] == oppositeDirection) continue;
+			if (Board.getSingleton().isTileWalkable(currentX + directions[i].getDeltaX(), currentY + directions[i].getDeltaY())) {
+				double currentDistance = distanceToTarget(currentX + directions[i].getDeltaX(), currentY + directions[i].getDeltaY(), targetX, targetY);
 				if (minDistance > currentDistance) {
 					minDistance = currentDistance;
 					directionWithMinDistance = directions[i];

@@ -26,8 +26,31 @@ public class Sprite {
 	protected void move() {
 		
 	}
+	
+	public int getScatterX() {
+		return 0;
+	}
+	
+	public int getScatterY() {
+		return 0;
+	}
+	
+	public int getChaseX() {
+		return 0;
+	}
+	
+	public int getChaseY() {
+		return 0;
+	}
 
 	public Image getImage() {
 		return null;
+	}
+	
+	public String getMode() {
+		return null;
+	}
+	
+	public void setMode(String givenMode) {
 	}
 }

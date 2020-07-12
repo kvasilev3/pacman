@@ -1,6 +1,5 @@
 package pacmanGame;
 
-import java.awt.Color;
 import java.awt.EventQueue;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
