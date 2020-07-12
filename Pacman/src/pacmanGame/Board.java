@@ -166,16 +166,18 @@ public class Board extends JPanel implements ActionListener {
 			
 			g2d.drawImage(ghosts[i].getImage(), convertX(ghosts[i].getX()), convertY(ghosts[i].getY()), this);
 			
-			if (ghosts[i].direction == Direction.Up) {
-				g2d.drawImage(eyesUp.getImage(), convertX(ghosts[i].getX()), convertY(ghosts[i].getY()), this);
-			} else if (ghosts[i].direction == Direction.Left) {
-				g2d.drawImage(eyesLeft.getImage(), convertX(ghosts[i].getX()), convertY(ghosts[i].getY()), this);
-			} else if (ghosts[i].direction == Direction.Down) {
-				g2d.drawImage(eyesDown.getImage(), convertX(ghosts[i].getX()), convertY(ghosts[i].getY()), this);
-			} else if (ghosts[i].direction == Direction.Right) {
-				g2d.drawImage(eyesRight.getImage(), convertX(ghosts[i].getX()), convertY(ghosts[i].getY()), this);
-			} else {
-				System.out.println(ghosts[i] + "has no direction!");
+			if (ghosts[i].getMode() != "FRIGHTENED") {
+				if (ghosts[i].direction == Direction.Up) {
+					g2d.drawImage(eyesUp.getImage(), convertX(ghosts[i].getX()), convertY(ghosts[i].getY()), this);
+				} else if (ghosts[i].direction == Direction.Left) {
+					g2d.drawImage(eyesLeft.getImage(), convertX(ghosts[i].getX()), convertY(ghosts[i].getY()), this);
+				} else if (ghosts[i].direction == Direction.Down) {
+					g2d.drawImage(eyesDown.getImage(), convertX(ghosts[i].getX()), convertY(ghosts[i].getY()), this);
+				} else if (ghosts[i].direction == Direction.Right) {
+					g2d.drawImage(eyesRight.getImage(), convertX(ghosts[i].getX()), convertY(ghosts[i].getY()), this);
+				} else {
+					System.out.println(ghosts[i] + "has no direction!");
+				}
 			}
 		}
 		

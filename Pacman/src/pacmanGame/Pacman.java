@@ -5,8 +5,8 @@ import javax.swing.ImageIcon;
 
 public class Pacman extends Sprite {
 	
-	private Direction nextDirection = Direction.Down;
 	private Direction currentDirection = Direction.Left;
+	private Direction nextDirection = Direction.Down;
 	
 	public Pacman() {
 		//Starting Position
