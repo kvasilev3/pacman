@@ -313,9 +313,9 @@ public class Board extends JPanel {
 	}
 
 	public void useNextLife() {
-		pacmanDead = false;
-		pacman.setPacmansLife(pacmanDead);
 		if (lives > 0) {
+			pacmanDead = false;
+			pacman.setPacmansLife(pacmanDead);
 			pacman.resetSprite();
 			for (int i = 0; i < ghosts.length; i++) {
 				ghosts[i].resetSprite();

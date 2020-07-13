@@ -99,7 +99,6 @@ public class Pacman extends Sprite {
 				return pacmanDie[(int) i];
 			}
 			else {
-				i = 0;
 				return pacmanDie[9];
 			}
 		}
