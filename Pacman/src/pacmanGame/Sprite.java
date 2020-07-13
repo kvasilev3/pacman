@@ -45,4 +45,11 @@ public class Sprite {
 	public int getTargetY(Sprite pacman, Sprite blinky) {
 		return 0;
 	}
+	
+	public void resetSprite() {
+		init();
+	}
+	
+	protected void init() {
+	}
 }

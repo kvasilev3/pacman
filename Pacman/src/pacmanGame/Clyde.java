@@ -12,6 +12,11 @@ public class Clyde extends Ghost {
 	};
 	
 	public Clyde() {
+		init();
+	}
+	
+	@Override
+	protected void init() {
 		//Starting Position
 		x = 7; //83
 		y = 147; //71

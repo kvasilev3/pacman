@@ -12,6 +12,11 @@ public class Pinky extends Ghost {
 	};
 	
 	public Pinky() {
+		init();
+	}
+	
+	@Override
+	protected void init() {
 		//Starting Position
 		x = 7; //70
 		y = 7; //73

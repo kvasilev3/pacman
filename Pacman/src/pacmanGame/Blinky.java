@@ -12,6 +12,11 @@ public class Blinky extends Ghost {
 			};
 
 	public Blinky() {
+		init();
+	}
+	
+	@Override
+	protected void init() {
 		// Starting Position
 		x = 70;
 		y = 57;

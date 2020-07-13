@@ -12,6 +12,11 @@ public class Inky extends Ghost {
 			};
 	
 	public Inky() {
+		init();
+	}
+	
+	@Override
+	protected void init() {
 		//Starting Position
 		x = 132; //55
 		y = 147; //71

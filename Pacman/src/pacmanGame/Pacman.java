@@ -8,12 +8,24 @@ import javax.swing.ImageIcon;
 public class Pacman extends Sprite {
 	
 	private Direction nextDirection = Direction.Left;
+	private boolean pacmanDead = false;
+	private double i = 0;
 	
 	public Pacman() {
+		init();
+	}
+	
+	@Override
+	protected void init() {
 		//Starting Position
 		x = 70;
 		y = 117;
 		direction = Direction.Left;
+	}
+	
+	public void setPacmansLife(boolean pacmanDead) {
+		this.pacmanDead = pacmanDead;
+		i = 0;
 	}
 
 	private Image[] yellowManLeft = {
@@ -53,9 +65,12 @@ public class Pacman extends Sprite {
 			new ImageIcon("Pacman/src/resources/pacman_die_10.png").getImage(),
 			
 	};
-	private double i = 0;
+	
+	public boolean isDeathDone() {
+		return i >= 9;
+	}
 
-	public Image getImage(boolean pacmanDead) {
+	public Image getImage() {
 		if (!pacmanDead) {
 			i += 0.1;
 			if (i >= yellowManLeft.length) {
@@ -79,16 +94,16 @@ public class Pacman extends Sprite {
 			
 		}
 		else {
-			if (i < 9) {
+			if (i <= 9) {
 				i += 0.1;
 				return pacmanDie[(int) i];
 			}
 			else {
+				i = 0;
 				return pacmanDie[9];
 			}
 		}
-	}
-	
+	}	
 	
 	public void setNextDirection(Direction direction) {
 		nextDirection = direction;
