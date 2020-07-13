@@ -23,15 +23,23 @@ public class Blinky extends Ghost {
 	}
 
 	@Override
-	public int getChaseX(Sprite pacman, Sprite blinky) {
-		chaseX = pacman.getX();
-		return chaseX;
+	public int getTargetX(Sprite pacman, Sprite blinky) {
+		if (getMode() == "SCATTER") {
+			return scatterX;
+		} else {
+			chaseX = pacman.getX();
+			return chaseX;
+		}
 	}
 	
 	@Override
-	public int getChaseY(Sprite pacman, Sprite blinky) {
-		chaseY = pacman.getY();
-		return chaseY;
+	public int getTargetY(Sprite pacman, Sprite blinky) {
+		if (getMode() == "SCATTER") {
+			return scatterY;
+		} else {
+			chaseY = pacman.getY();
+			return chaseY;
+		}
 	}
 	
 	@Override

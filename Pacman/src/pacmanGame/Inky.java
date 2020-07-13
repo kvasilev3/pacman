@@ -23,41 +23,50 @@ public class Inky extends Ghost {
 	}
 	
 	@Override
-	public int getChaseX(Sprite pacman, Sprite blinky) {
-		int blinkyX = blinky.getX();
-		if (pacman.direction == Direction.Up) {
-			chaseX = pacman.getX() - 2;
-		} else if (pacman.direction == Direction.Left) {
-			chaseX = pacman.getX() - 2;
-		} else if (pacman.direction == Direction.Down) {
+	public int getTargetX(Sprite pacman, Sprite blinky) {
+		if (getMode() == "SCATTER") {
+			return scatterX;
+		} else {
 			chaseX = pacman.getX();
-		} else if (pacman.direction == Direction.Right) {
-			chaseX = pacman.getX() + 2;
+			int blinkyX = blinky.getX();
+			if (pacman.direction == Direction.Up) {
+				chaseX = pacman.getX() - (2 * 5);
+			} else if (pacman.direction == Direction.Left) {
+				chaseX = pacman.getX() - (2 * 5);
+			} else if (pacman.direction == Direction.Down) {
+				chaseX = pacman.getX();
+			} else if (pacman.direction == Direction.Right) {
+				chaseX = pacman.getX() + (2 * 5);
+			}
+			
+			int distanceToBlinky = chaseX - blinkyX;
+			chaseX = chaseX + distanceToBlinky;
+			
+			return chaseX;
 		}
-		
-		int distanceToBlinky = chaseX - blinkyX;
-		chaseX = chaseX + distanceToBlinky;
-		
-		return chaseX;
 	}
 	
 	@Override
-	public int getChaseY(Sprite pacman, Sprite blinky) {
-		int blinkyY = blinky.getY();
-		if (pacman.direction == Direction.Up) {
-			chaseY = pacman.getY() - 2;
-		} else if (pacman.direction == Direction.Left) {
-			chaseY = pacman.getY();
-		} else if (pacman.direction == Direction.Down) {
-			chaseY = pacman.getY() + 2;
-		} else if (pacman.direction == Direction.Right) {
-			chaseY = pacman.getY() ;
-		}
+	public int getTargetY(Sprite pacman, Sprite blinky) {
+		if (getMode() == "SCATTER") {
+			return scatterY;
+		} else {
+			int blinkyY = blinky.getY();
+			if (pacman.direction == Direction.Up) {
+				chaseY = pacman.getY() - (2 * 5);
+			} else if (pacman.direction == Direction.Left) {
+				chaseY = pacman.getY();
+			} else if (pacman.direction == Direction.Down) {
+				chaseY = pacman.getY() + (2 * 5);
+			} else if (pacman.direction == Direction.Right) {
+				chaseY = pacman.getY() ;
+			}
 
-		int distanceToBlinky = chaseX - blinkyY;
-		chaseY = chaseY + distanceToBlinky;
-		
-		return chaseY;
+			int distanceToBlinky = chaseY - blinkyY;
+			chaseY = chaseY + distanceToBlinky;
+			
+			return chaseY;
+		}
 	}
 
 	@Override

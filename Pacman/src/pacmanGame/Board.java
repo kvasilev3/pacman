@@ -45,6 +45,12 @@ public class Board extends JPanel {
 	private ImageIcon eyesDown = new ImageIcon("Pacman/src/resources/eyes_down.png");
 	private ImageIcon eyesRight = new ImageIcon("Pacman/src/resources/eyes_right.png");
 	
+	private boolean debuggerMode = true;
+	private ImageIcon blinkyTarget = new ImageIcon("Pacman/src/resources/blinky_target.png");
+	private ImageIcon inkyTarget = new ImageIcon("Pacman/src/resources/inky_target.png");
+	private ImageIcon pinkyTarget = new ImageIcon("Pacman/src/resources/pinky_target.png");
+	private ImageIcon clydeTarget = new ImageIcon("Pacman/src/resources/clyde_target.png");
+	
 	private int tiles[][] = new int[GRID_WIDTH][GRID_HEIGHT];
 	private int score = 0;
 
@@ -197,6 +203,13 @@ public class Board extends JPanel {
 		}
 		
 		g2d.drawImage(pacman.getImage(), convertX(pacman.getX()), convertY(pacman.getY()), this);
+		
+		if (debuggerMode == true) {
+			g2d.drawImage(blinkyTarget.getImage(), convertX(ghosts[0].getTargetX(pacman, ghosts[0])), convertY(ghosts[0].getTargetY(pacman, ghosts[0])), this);
+			g2d.drawImage(inkyTarget.getImage(), convertX(ghosts[1].getTargetX(pacman, ghosts[0])), convertY(ghosts[1].getTargetY(pacman, ghosts[0])), this);
+			g2d.drawImage(pinkyTarget.getImage(), convertX(ghosts[2].getTargetX(pacman, ghosts[0])), convertY(ghosts[2].getTargetY(pacman, ghosts[0])), this);
+			g2d.drawImage(clydeTarget.getImage(), convertX(ghosts[3].getTargetX(pacman, ghosts[0])), convertY(ghosts[3].getTargetY(pacman, ghosts[0])), this);
+		}
 	}
 	
 	private int convertX(int x) {

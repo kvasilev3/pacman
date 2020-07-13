@@ -27,22 +27,6 @@ public class Sprite {
 		
 	}
 	
-	public int getScatterX() {
-		return 0;
-	}
-	
-	public int getScatterY() {
-		return 0;
-	}
-	
-	public int getChaseX(Sprite pacman, Sprite blinky) {
-		return 0;
-	}
-	
-	public int getChaseY(Sprite pacman, Sprite blinky) {
-		return 0;
-	}
-
 	public Image getImage() {
 		return null;
 	}
@@ -52,5 +36,13 @@ public class Sprite {
 	}
 	
 	public void setMode(String givenMode) {
+	}
+
+	public int getTargetX(Sprite pacman, Sprite blinky) {
+		return 0;
+	}
+
+	public int getTargetY(Sprite pacman, Sprite blinky) {
+		return 0;
 	}
 }

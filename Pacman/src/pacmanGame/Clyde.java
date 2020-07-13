@@ -23,25 +23,33 @@ public class Clyde extends Ghost {
 	}
 	
 	@Override
-	public int getChaseX(Sprite pacman, Sprite blinky) {
-		double distanceToPacman = Math.sqrt(Math.pow(pacman.getX() - getX(), 2) + Math.pow(pacman.getY() - getY(), 2));
-		if (distanceToPacman <= 8) {
-			chaseX = scatterX;
+	public int getTargetX(Sprite pacman, Sprite blinky) {
+		if (getMode() == "SCATTER") {
+			return scatterX;
 		} else {
-			chaseX = pacman.getX();
+			double distanceToPacman = Math.sqrt(Math.pow(pacman.getX() - getX(), 2) + Math.pow(pacman.getY() - getY(), 2));
+			if (distanceToPacman <= (8 * 5)) {
+				chaseX = scatterX;
+			} else {
+				chaseX = pacman.getX();
+			}
+			return chaseX;
 		}
-		return chaseX;
 	}
 	
 	@Override
-	public int getChaseY(Sprite pacman, Sprite blinky) {
-		double distanceToPacman = Math.sqrt(Math.pow(pacman.getX() - getX(), 2) + Math.pow(pacman.getY() - getY(), 2));
-		if (distanceToPacman <= 8) {
-			chaseY = scatterY;
+	public int getTargetY(Sprite pacman, Sprite blinky) {
+		if (getMode() == "SCATTER") {
+			return scatterY;
 		} else {
-			chaseY = pacman.getY();
+			double distanceToPacman = Math.sqrt(Math.pow(pacman.getX() - getX(), 2) + Math.pow(pacman.getY() - getY(), 2));
+			if (distanceToPacman <= (8 * 5)) {
+				chaseY = scatterY;
+			} else {
+				chaseY = pacman.getY();
+			}
+			return chaseY;
 		}
-		return chaseY;
 	}
 	
 	@Override

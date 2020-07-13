@@ -23,31 +23,39 @@ public class Pinky extends Ghost {
 	}
 	
 	@Override
-	public int getChaseX(Sprite pacman, Sprite blinky) {
-		if (pacman.direction == Direction.Up) {
-			chaseX = pacman.getX() - 4;
-		} else if (pacman.direction == Direction.Left) {
-			chaseX = pacman.getX() - 4;
-		} else if (pacman.direction == Direction.Down) {
-			chaseX = pacman.getX();
-		} else if (pacman.direction == Direction.Right) {
-			chaseX = pacman.getX() + 4;
+	public int getTargetX(Sprite pacman, Sprite blinky) {
+		if (getMode() == "SCATTER") {
+			return scatterX;
+		} else {
+			if (pacman.direction == Direction.Up) {
+				chaseX = pacman.getX() - (4 * 5);
+			} else if (pacman.direction == Direction.Left) {
+				chaseX = pacman.getX() - (4 * 5);
+			} else if (pacman.direction == Direction.Down) {
+				chaseX = pacman.getX();
+			} else if (pacman.direction == Direction.Right) {
+				chaseX = pacman.getX() + (4 * 5);
+			}
+			return chaseX;
 		}
-		return chaseX;
 	}
 	
 	@Override
-	public int getChaseY(Sprite pacman, Sprite blinky) {
-		if (pacman.direction == Direction.Up) {
-			chaseY = pacman.getY() - 4;
-		} else if (pacman.direction == Direction.Left) {
-			chaseY = pacman.getY();
-		} else if (pacman.direction == Direction.Down) {
-			chaseY = pacman.getY() + 4;
-		} else if (pacman.direction == Direction.Right) {
-			chaseY = pacman.getY() ;
+	public int getTargetY(Sprite pacman, Sprite blinky) {
+		if (getMode() == "SCATTER") {
+			return scatterY;
+		} else {
+			if (pacman.direction == Direction.Up) {
+				chaseY = pacman.getY() - (4 * 5);
+			} else if (pacman.direction == Direction.Left) {
+				chaseY = pacman.getY();
+			} else if (pacman.direction == Direction.Down) {
+				chaseY = pacman.getY() + (4 * 5);
+			} else if (pacman.direction == Direction.Right) {
+				chaseY = pacman.getY() ;
+			}
+			return chaseY;
 		}
-		return chaseY;
 	}
 	
 	@Override

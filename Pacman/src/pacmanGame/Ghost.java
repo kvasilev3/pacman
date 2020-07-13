@@ -97,13 +97,13 @@ public class Ghost extends Sprite {
 				this.direction = possibleDirections[index];
 				
 			} else if (getMode() == "SCATTER") {
-				Direction minPathScatter = ts.findMinPath(x, y, getScatterX(), getScatterY(), direction);
+				Direction minPathScatter = ts.findMinPath(x, y, getTargetX(pacman, blinky), getTargetX(pacman, blinky), direction);
 				this.x += minPathScatter.getDeltaX();
 				this.y += minPathScatter.getDeltaY();
 				this.direction = minPathScatter;
 				
 			} else if (getMode() == "CHASE") {
-				Direction minPathChase = ts.findMinPath(x, y, getChaseX(pacman, blinky), getChaseY(pacman, blinky), direction);
+				Direction minPathChase = ts.findMinPath(x, y, getTargetX(pacman, blinky), getTargetY(pacman, blinky), direction);
 				this.x += minPathChase.getDeltaX();
 				this.y += minPathChase.getDeltaY();
 				this.direction = minPathChase;
@@ -138,22 +138,20 @@ public class Ghost extends Sprite {
 	}
 	
 	@Override
-	public int getScatterX() {
-		return scatterX;
+	public int getTargetX(Sprite pacman, Sprite blinky) {
+		if (getMode() == "SCATTER") {
+			return scatterX;
+		} else {
+			return chaseX;
+		}
 	}
 	
 	@Override
-	public int getScatterY() {
-		return scatterY;
-	}
-	
-	@Override
-	public int getChaseX(Sprite pacman, Sprite blinky) {
-		return chaseX;
-	}
-	
-	@Override
-	public int getChaseY(Sprite pacman, Sprite blinky) {
-		return chaseY;
+	public int getTargetY(Sprite pacman, Sprite blinky) {
+		if (getMode() == "SCATTER") {
+			return scatterY;
+		} else {
+			return chaseY;
+		}
 	}
 }
