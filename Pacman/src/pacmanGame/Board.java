@@ -30,6 +30,7 @@ public class Board extends JPanel {
 	private Image background;
 	private Image pellet;
 	private Image powerPellet;
+	private boolean pacmanDead = false;
 
 	private final int GRID_WIDTH = 28*5; // The width of the original game was 28 tiles. We've decided to make it 5 times bigger.
 	private final int GRID_HEIGHT = 31*5; // The height of the original game was 31 tiles. We've decided to make it 5 times bigger. 
@@ -45,7 +46,7 @@ public class Board extends JPanel {
 	private ImageIcon eyesDown = new ImageIcon("Pacman/src/resources/eyes_down.png");
 	private ImageIcon eyesRight = new ImageIcon("Pacman/src/resources/eyes_right.png");
 	
-	private boolean debuggerMode = true;
+	private boolean debuggerMode = false;
 	private ImageIcon blinkyTarget = new ImageIcon("Pacman/src/resources/blinky_target.png");
 	private ImageIcon inkyTarget = new ImageIcon("Pacman/src/resources/inky_target.png");
 	private ImageIcon pinkyTarget = new ImageIcon("Pacman/src/resources/pinky_target.png");
@@ -173,36 +174,42 @@ public class Board extends JPanel {
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.drawImage(background, 0, 0, this);
 		
+		int p = 0;
 		for (int y=0; y<GRID_HEIGHT; y++) {
 			for (int x=0; x<GRID_WIDTH; x++) {
 				if (tiles[y][x] == TILE_HAS_PELLET) {
 					g2d.drawImage(pellet, convertX(x)+11, convertY(y)+11, this);
+					p++;
 				} else if (tiles[y][x] == TILE_HAS_POWER_PELLET) {
 					g2d.drawImage(powerPellet, convertX(x)+5, convertY(y)+5, this);
+					p++;
 				}
 			}
 		}
+		System.out.println(p);
 		
-		for (int i = 0; i < ghosts.length; i++) {
-			
-			g2d.drawImage(ghosts[i].getImage(), convertX(ghosts[i].getX()), convertY(ghosts[i].getY()), this);
-			
-			if (ghosts[i].getMode() != "FRIGHTENED") {
-				if (ghosts[i].direction == Direction.Up) {
-					g2d.drawImage(eyesUp.getImage(), convertX(ghosts[i].getX()), convertY(ghosts[i].getY()), this);
-				} else if (ghosts[i].direction == Direction.Left) {
-					g2d.drawImage(eyesLeft.getImage(), convertX(ghosts[i].getX()), convertY(ghosts[i].getY()), this);
-				} else if (ghosts[i].direction == Direction.Down) {
-					g2d.drawImage(eyesDown.getImage(), convertX(ghosts[i].getX()), convertY(ghosts[i].getY()), this);
-				} else if (ghosts[i].direction == Direction.Right) {
-					g2d.drawImage(eyesRight.getImage(), convertX(ghosts[i].getX()), convertY(ghosts[i].getY()), this);
-				} else {
-					System.out.println(ghosts[i] + "has no direction!");
+		
+		if (!pacmanDead) {
+			for (int i = 0; i < ghosts.length; i++) {
+				
+				g2d.drawImage(ghosts[i].getImage(), convertX(ghosts[i].getX()), convertY(ghosts[i].getY()), this);
+				
+				if (ghosts[i].getMode() != "FRIGHTENED") {
+					if (ghosts[i].direction == Direction.Up) {
+						g2d.drawImage(eyesUp.getImage(), convertX(ghosts[i].getX()), convertY(ghosts[i].getY()), this);
+					} else if (ghosts[i].direction == Direction.Left) {
+						g2d.drawImage(eyesLeft.getImage(), convertX(ghosts[i].getX()), convertY(ghosts[i].getY()), this);
+					} else if (ghosts[i].direction == Direction.Down) {
+						g2d.drawImage(eyesDown.getImage(), convertX(ghosts[i].getX()), convertY(ghosts[i].getY()), this);
+					} else if (ghosts[i].direction == Direction.Right) {
+						g2d.drawImage(eyesRight.getImage(), convertX(ghosts[i].getX()), convertY(ghosts[i].getY()), this);
+					} else {
+						System.out.println(ghosts[i] + "has no direction!");
+					}
 				}
 			}
 		}
-		
-		g2d.drawImage(pacman.getImage(), convertX(pacman.getX()), convertY(pacman.getY()), this);
+		g2d.drawImage(pacman.getImage(pacmanDead), convertX(pacman.getX()), convertY(pacman.getY()), this);
 		
 		if (debuggerMode == true) {
 			g2d.drawImage(blinkyTarget.getImage(), convertX(ghosts[0].getTargetX(pacman, ghosts[0])), convertY(ghosts[0].getTargetY(pacman, ghosts[0])), this);
@@ -224,6 +231,9 @@ public class Board extends JPanel {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			if (pacmanDead) {
+				return;
+			}
 			pacman.move(pacman, ghosts[0]);
 			
 			if (pacman.getX() == 0 && pacman.getY() == 72 && pacman.direction == Direction.Left) {
@@ -253,6 +263,9 @@ public class Board extends JPanel {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			if (pacmanDead) {
+				return;
+			}
 			for (int i = 0; i < ghosts.length; i++) {
 				ghosts[i].move(pacman, ghosts[0]);
 				
@@ -269,6 +282,8 @@ public class Board extends JPanel {
 						score += 200;
 					} else if (ghosts[i].getMode() == "EATEN") {
 					} else {
+						pacmanDead = true;
+						
 						System.out.println("Pacman was eaten");
 					}
 				}

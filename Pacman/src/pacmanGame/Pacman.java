@@ -40,30 +40,55 @@ public class Pacman extends Sprite {
 			new ImageIcon("Pacman/src/resources/pacman_down_2.png").getImage(),
 			new ImageIcon("Pacman/src/resources/pacman_down_1.png").getImage()
 			};
-	private int i = 0;
+	private Image[] pacmanDie = {
+			new ImageIcon("Pacman/src/resources/pacman_die_1.png").getImage(),
+			new ImageIcon("Pacman/src/resources/pacman_die_2.png").getImage(),
+			new ImageIcon("Pacman/src/resources/pacman_die_3.png").getImage(),
+			new ImageIcon("Pacman/src/resources/pacman_die_4.png").getImage(),
+			new ImageIcon("Pacman/src/resources/pacman_die_5.png").getImage(),
+			new ImageIcon("Pacman/src/resources/pacman_die_6.png").getImage(),
+			new ImageIcon("Pacman/src/resources/pacman_die_7.png").getImage(),
+			new ImageIcon("Pacman/src/resources/pacman_die_8.png").getImage(),
+			new ImageIcon("Pacman/src/resources/pacman_die_9.png").getImage(),
+			new ImageIcon("Pacman/src/resources/pacman_die_10.png").getImage(),
+			
+	};
+	private double i = 0;
 
-	public Image getImage() {
-		i++;
-		if (i >= yellowManLeft.length) {
-			i = 0;
-		}
-		if (direction == Direction.Up) {
-			return yellowManUp[i];
-		}
-		else if (direction == Direction.Down) {
-			return yellowManDown[i];
-		}
-		else if (direction == Direction.Right) {
-			return yellowManRight[i];
-		}
-		else if (direction == Direction.Left) {
-			return yellowManLeft[i];
+	public Image getImage(boolean pacmanDead) {
+		if (!pacmanDead) {
+			i += 0.1;
+			if (i >= yellowManLeft.length) {
+				i = 0;
+			}
+			if (direction == Direction.Up) {
+				return yellowManUp[(int) i];
+			}
+			else if (direction == Direction.Down) {
+				return yellowManDown[(int) i];
+			}
+			else if (direction == Direction.Right) {
+				return yellowManRight[(int) i];
+			}
+			else if (direction == Direction.Left) {
+				return yellowManLeft[(int) i];
+			}
+			else {
+				return yellowManLeft[(int) i];
+			}
+			
 		}
 		else {
-			return yellowManLeft[i];
+			if (i < 9) {
+				i += 0.1;
+				return pacmanDie[(int) i];
+			}
+			else {
+				return pacmanDie[9];
+			}
 		}
-		
 	}
+	
 	
 	public void setNextDirection(Direction direction) {
 		nextDirection = direction;
