@@ -17,7 +17,7 @@ public class GameFrame extends JFrame {
 		//board.setFocusable(true);
 		
         setTitle("Pacman original 2.0");
-        setSize(392, 547);
+        //setSize(392, 547);
         
         ImageIcon myAppImage = new ImageIcon("Pacman/src/resources/pacman_desktop.png");
         setIconImage(myAppImage.getImage());
@@ -25,6 +25,7 @@ public class GameFrame extends JFrame {
         setLocationRelativeTo(null);
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        pack();
        
     }
 	

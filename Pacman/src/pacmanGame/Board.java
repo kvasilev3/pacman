@@ -1,5 +1,7 @@
 package pacmanGame;
 
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -69,6 +71,9 @@ public class Board extends JPanel {
 	};
 
 	private Board() {
+		
+		Dimension d = new Dimension(392, 518);
+		setPreferredSize(d);
 		
 		mapKeys();
 		
@@ -176,6 +181,7 @@ public class Board extends JPanel {
 		int p = 0;
 
 		Graphics2D g2d = (Graphics2D) g;
+		setBackground(Color.BLACK);
 		g2d.drawImage(background, 0, 0, this);
 		if (debuggerMode) {
 			g2d.drawImage(grid.getImage(), 0, 0, this);
