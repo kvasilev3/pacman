@@ -47,7 +47,8 @@ public class Board extends JPanel {
 	private ImageIcon eyesDown = new ImageIcon("Pacman/src/resources/eyes_down.png");
 	private ImageIcon eyesRight = new ImageIcon("Pacman/src/resources/eyes_right.png");
 	
-	private boolean debuggerMode = true;
+	private boolean debuggerMode = false;
+	private ImageIcon grid = new ImageIcon("Pacman/src/resources/tiles_grid.png");
 	private ImageIcon blinkyTarget = new ImageIcon("Pacman/src/resources/blinky_target.png");
 	private ImageIcon inkyTarget = new ImageIcon("Pacman/src/resources/inky_target.png");
 	private ImageIcon pinkyTarget = new ImageIcon("Pacman/src/resources/pinky_target.png");
@@ -172,11 +173,15 @@ public class Board extends JPanel {
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
+		int p = 0;
 
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.drawImage(background, 0, 0, this);
+		if (debuggerMode) {
+			g2d.drawImage(grid.getImage(), 0, 0, this);
+			p -= 240;
+		}
 		
-		int p = 0;
 		for (int y=0; y<GRID_HEIGHT; y++) {
 			for (int x=0; x<GRID_WIDTH; x++) {
 				if (tiles[y][x] == TILE_HAS_PELLET) {
@@ -188,7 +193,7 @@ public class Board extends JPanel {
 				}
 			}
 		}
-		//p -= 240;
+		
 		if (p == 0) {
 			levelComplete = true;
 		}
@@ -230,11 +235,11 @@ public class Board extends JPanel {
 	}
 	
 	private int convertX(int x) {
-		return (int) (2.7571429 * (x-3));
+		return (int) (2.8 * x - 10);
 	}
 
 	private int convertY(int y) {
-		return (int) (2.76129 * (y-3));
+		return (int) (2.8 * y + 32);
 	}
 
 	private class PacmanMoveListener implements ActionListener {

@@ -21,6 +21,7 @@ public class Pacman extends Sprite {
 		x = 70;
 		y = 117;
 		direction = Direction.Left;
+		nextDirection = Direction.Left;
 	}
 	
 	public void setPacmansLife(boolean pacmanDead) {
