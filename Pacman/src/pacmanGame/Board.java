@@ -38,6 +38,7 @@ public class Board extends JPanel {
 	private Image powerPellet;
 	private boolean pacmanDead = false;
 	private boolean levelComplete = false;
+	private double winCount = 0.000000000000000;
 
 	private final int GRID_WIDTH = 28*5; // The width of the original game was 28 tiles. We've decided to make it 5 times bigger.
 	private final int GRID_HEIGHT = 31*5; // The height of the original game was 31 tiles. We've decided to make it 5 times bigger. 
@@ -185,17 +186,17 @@ public class Board extends JPanel {
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		int p = 0;
-		double winCount = 0.000000000000000;
 
 		Graphics2D g2d = (Graphics2D) g;
 		setBackground(Color.BLACK);
 		if (levelComplete) {
-			if (winCount <= 1.1) {
-				winCount += (double) (REDRAW_DELAY / 2);
+			if (winCount <= 1.5) {
+				winCount += 0.1;
 				g2d.drawImage(winBackground[(int) winCount], 0, 0, this);
 			}
 			else {
-				g2d.drawImage(winBackground[1], 0, 0, this);;
+				winCount = 0;
+				g2d.drawImage(winBackground[1], 0, 0, this);
 			}
 		} else {
 			g2d.drawImage(background, 0, 0, this);
