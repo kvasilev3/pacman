@@ -18,19 +18,21 @@ public class Pinky extends Ghost {
 	@Override
 	protected void init() {
 		//Starting Position
-		x = 7; //70
-		y = 7; //73
-		direction = Direction.Down;
+		x = 70;
+		y = 69;
+		direction = Direction.Up;
 		
 		scatterX = 10;
 		scatterY = -20;
-		mode = "CHASE";
+		mode = "GHOSTHOUSE";
 	}
 	
 	@Override
 	public int getTargetX(Sprite pacman, Sprite blinky) {
 		if (getMode() == "SCATTER") {
 			return scatterX;
+		} else if (getMode() == "EATEN") {
+			return ghostHouseX;
 		} else {
 			if (pacman.direction == Direction.Up) {
 				chaseX = pacman.getX() - (4 * 5);
@@ -49,6 +51,8 @@ public class Pinky extends Ghost {
 	public int getTargetY(Sprite pacman, Sprite blinky) {
 		if (getMode() == "SCATTER") {
 			return scatterY;
+		} else if (getMode() == "EATEN") {
+			return ghostHouseY;
 		} else {
 			if (pacman.direction == Direction.Up) {
 				chaseY = pacman.getY() - (4 * 5);

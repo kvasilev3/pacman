@@ -31,6 +31,8 @@ public class Blinky extends Ghost {
 	public int getTargetX(Sprite pacman, Sprite blinky) {
 		if (getMode() == "SCATTER") {
 			return scatterX;
+		} else if (getMode() == "EATEN") {
+			return ghostHouseX;
 		} else {
 			chaseX = pacman.getX();
 			return chaseX;
@@ -41,6 +43,8 @@ public class Blinky extends Ghost {
 	public int getTargetY(Sprite pacman, Sprite blinky) {
 		if (getMode() == "SCATTER") {
 			return scatterY;
+		} else if (getMode() == "EATEN") {
+			return ghostHouseY;
 		} else {
 			chaseY = pacman.getY();
 			return chaseY;

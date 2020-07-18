@@ -18,19 +18,21 @@ public class Clyde extends Ghost {
 	@Override
 	protected void init() {
 		//Starting Position
-		x = 7; //83
-		y = 147; //71
-		direction = Direction.Up;
+		x = 80;
+		y = 75;
+		direction = Direction.Down;
 		
 		scatterX = 0;
 		scatterY = 155;
-		mode = "CHASE";
+		mode = "GHOSTHOUSE";
 	}
 	
 	@Override
 	public int getTargetX(Sprite pacman, Sprite blinky) {
 		if (getMode() == "SCATTER") {
 			return scatterX;
+		} else if (getMode() == "EATEN") {
+			return ghostHouseX;
 		} else {
 			double distanceToPacman = Math.sqrt(Math.pow(pacman.getX() - getX(), 2) + Math.pow(pacman.getY() - getY(), 2));
 			if (distanceToPacman <= (8 * 5)) {
@@ -46,6 +48,8 @@ public class Clyde extends Ghost {
 	public int getTargetY(Sprite pacman, Sprite blinky) {
 		if (getMode() == "SCATTER") {
 			return scatterY;
+		} else if (getMode() == "EATEN") {
+			return ghostHouseY;
 		} else {
 			double distanceToPacman = Math.sqrt(Math.pow(pacman.getX() - getX(), 2) + Math.pow(pacman.getY() - getY(), 2));
 			if (distanceToPacman <= (8 * 5)) {

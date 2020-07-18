@@ -13,6 +13,8 @@ public class Ghost extends Sprite {
 	protected int scatterY = 0;
 	protected int chaseX = 0;
 	protected int chaseY = 0;
+	protected int ghostHouseX = 70;
+	protected int ghostHouseY = 57;
 	protected Image[] frightenedGhost = {
 			new ImageIcon("Pacman/src/resources/escaping_ghost_1.png").getImage(),
 			new ImageIcon("Pacman/src/resources/escaping_ghost_2.png").getImage()
@@ -21,7 +23,7 @@ public class Ghost extends Sprite {
 
 	public Direction[] getPossibleDirections(int x, int y, Direction currentDirection) {
 		ArrayList<Direction> possibleDirections = new ArrayList<>();
-		if (currentDirection == Direction.Up) {
+		if (getMode() == "GHOSTHOUSE") {
 			if (Board.getSingleton().isTileWalkable(x, y - 1)) {
 				possibleDirections.add(Direction.Up);
 			}
@@ -31,43 +33,58 @@ public class Ghost extends Sprite {
 			if (Board.getSingleton().isTileWalkable(x + 1, y)) {
 				possibleDirections.add(Direction.Right);
 			}
-		} else if (currentDirection == Direction.Left) {
-			if (Board.getSingleton().isTileWalkable(x - 1, y)) {
-				possibleDirections.add(Direction.Left);
-			}
 			if (Board.getSingleton().isTileWalkable(x, y + 1)) {
 				possibleDirections.add(Direction.Down);
 			}
-			if (Board.getSingleton().isTileWalkable(x, y - 1)) {
-				if (x >= 55 && x <= 84 && y == 57) {
-				} else if (x >= 55 && x <= 84 && y == 117) {
-				} else {
+		} else {
+			if (currentDirection == Direction.Up) {
+				if (Board.getSingleton().isTileWalkable(x, y - 1)) {
 					possibleDirections.add(Direction.Up);
 				}
-			}
-		} else if (currentDirection == Direction.Down) {
-			if (Board.getSingleton().isTileWalkable(x - 1, y)) {
-				possibleDirections.add(Direction.Left);
-			}
-			if (Board.getSingleton().isTileWalkable(x, y + 1)) {
-				possibleDirections.add(Direction.Down);
-			}
-			if (Board.getSingleton().isTileWalkable(x + 1, y)) {
-				possibleDirections.add(Direction.Right);
-			}
-		} else if (currentDirection == Direction.Right) {
-			if (Board.getSingleton().isTileWalkable(x, y - 1)) {
-				if (x >= 55 && x <= 84 && y == 57) {
-				} else if (x >= 55 && x <= 84 && y == 117) {
-				} else {
-					possibleDirections.add(Direction.Up);
+				if (Board.getSingleton().isTileWalkable(x - 1, y)) {
+					possibleDirections.add(Direction.Left);
 				}
-			}
-			if (Board.getSingleton().isTileWalkable(x, y + 1)) {
-				possibleDirections.add(Direction.Down);
-			}
-			if (Board.getSingleton().isTileWalkable(x + 1, y)) {
-				possibleDirections.add(Direction.Right);
+				if (Board.getSingleton().isTileWalkable(x + 1, y)) {
+					possibleDirections.add(Direction.Right);
+				}
+			} else if (currentDirection == Direction.Left) {
+				if (Board.getSingleton().isTileWalkable(x - 1, y)) {
+					possibleDirections.add(Direction.Left);
+				}
+				if (Board.getSingleton().isTileWalkable(x, y + 1)) {
+					possibleDirections.add(Direction.Down);
+				}
+				if (Board.getSingleton().isTileWalkable(x, y - 1)) {
+					if (x >= 55 && x <= 84 && y == 57) {
+					} else if (x >= 55 && x <= 84 && y == 117) {
+					} else {
+						possibleDirections.add(Direction.Up);
+					}
+				}
+			} else if (currentDirection == Direction.Down) {
+				if (Board.getSingleton().isTileWalkable(x - 1, y)) {
+					possibleDirections.add(Direction.Left);
+				}
+				if (Board.getSingleton().isTileWalkable(x, y + 1)) {
+					possibleDirections.add(Direction.Down);
+				}
+				if (Board.getSingleton().isTileWalkable(x + 1, y)) {
+					possibleDirections.add(Direction.Right);
+				}
+			} else if (currentDirection == Direction.Right) {
+				if (Board.getSingleton().isTileWalkable(x, y - 1)) {
+					if (x >= 55 && x <= 84 && y == 57) {
+					} else if (x >= 55 && x <= 84 && y == 117) {
+					} else {
+						possibleDirections.add(Direction.Up);
+					}
+				}
+				if (Board.getSingleton().isTileWalkable(x, y + 1)) {
+					possibleDirections.add(Direction.Down);
+				}
+				if (Board.getSingleton().isTileWalkable(x + 1, y)) {
+					possibleDirections.add(Direction.Right);
+				}
 			}
 		}
 		Direction result[] = new Direction[possibleDirections.size()];
@@ -109,8 +126,8 @@ public class Ghost extends Sprite {
 				this.direction = minPathChase;
 				
 			} else if (getMode() == "EATEN") {
-				if (x == 70 && y == 57) {
-					setMode("CHASE");
+				if (x == getTargetX(pacman, blinky) && y == getTargetY(pacman, blinky)) {
+					setMode("GHOSTHOUSE");
 				} else {
 					Direction minPathEaten = ts.findMinPath(x, y, 70, 57, direction);
 					this.x += minPathEaten.getDeltaX();
