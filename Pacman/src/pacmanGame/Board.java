@@ -30,6 +30,10 @@ public class Board extends JPanel {
 	private final int REDRAW_PER_SECOND = 30;
 	private final int REDRAW_DELAY = 1000 / REDRAW_PER_SECOND; // ms
 	private Image background;
+	private Image[] winBackground = {
+			new ImageIcon("Pacman/src/resources/maze_win_1.png").getImage(),
+			new ImageIcon("Pacman/src/resources/maze_win_2.png").getImage()
+	};
 	private Image pellet;
 	private Image powerPellet;
 	private boolean pacmanDead = false;
@@ -51,7 +55,7 @@ public class Board extends JPanel {
 	
 	private ImageIcon pacmanLives = new ImageIcon("Pacman/src/resources/pacman_right_1.png");
 	
-	private boolean debuggerMode = false;
+	private boolean debuggerMode = true;
 	private ImageIcon grid = new ImageIcon("Pacman/src/resources/tiles_grid.png");
 	private ImageIcon blinkyTarget = new ImageIcon("Pacman/src/resources/blinky_target.png");
 	private ImageIcon inkyTarget = new ImageIcon("Pacman/src/resources/inky_target.png");
@@ -181,13 +185,24 @@ public class Board extends JPanel {
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		int p = 0;
+		double winCount = 0.000000000000000;
 
 		Graphics2D g2d = (Graphics2D) g;
 		setBackground(Color.BLACK);
-		g2d.drawImage(background, 0, 0, this);
+		if (levelComplete) {
+			if (winCount <= 1.1) {
+				winCount += (double) (REDRAW_DELAY / 2);
+				g2d.drawImage(winBackground[(int) winCount], 0, 0, this);
+			}
+			else {
+				g2d.drawImage(winBackground[1], 0, 0, this);;
+			}
+		} else {
+			g2d.drawImage(background, 0, 0, this);
+		}
 		if (debuggerMode) {
 			g2d.drawImage(grid.getImage(), 0, 0, this);
-			p -= 240;
+			p -= 230;
 		}
 		
 		for (int y=0; y<GRID_HEIGHT; y++) {
