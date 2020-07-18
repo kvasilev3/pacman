@@ -49,7 +49,9 @@ public class Board extends JPanel {
 	private ImageIcon eyesDown = new ImageIcon("Pacman/src/resources/eyes_down.png");
 	private ImageIcon eyesRight = new ImageIcon("Pacman/src/resources/eyes_right.png");
 	
-	private boolean debuggerMode = true;
+	private ImageIcon pacmanLives = new ImageIcon("Pacman/src/resources/pacman_right_1.png");
+	
+	private boolean debuggerMode = false;
 	private ImageIcon grid = new ImageIcon("Pacman/src/resources/tiles_grid.png");
 	private ImageIcon blinkyTarget = new ImageIcon("Pacman/src/resources/blinky_target.png");
 	private ImageIcon inkyTarget = new ImageIcon("Pacman/src/resources/inky_target.png");
@@ -237,6 +239,10 @@ public class Board extends JPanel {
 			g2d.drawImage(inkyTarget.getImage(), convertX(ghosts[1].getTargetX(pacman, ghosts[0])), convertY(ghosts[1].getTargetY(pacman, ghosts[0])), this);
 			g2d.drawImage(pinkyTarget.getImage(), convertX(ghosts[2].getTargetX(pacman, ghosts[0])), convertY(ghosts[2].getTargetY(pacman, ghosts[0])), this);
 			g2d.drawImage(clydeTarget.getImage(), convertX(ghosts[3].getTargetX(pacman, ghosts[0])), convertY(ghosts[3].getTargetY(pacman, ghosts[0])), this);
+		}
+		
+		for (int i = 0; i < lives; i++) {
+			g2d.drawImage(pacmanLives.getImage(), (i * 30) + 5, convertY(32 * 5), this);
 		}
 	}
 	
