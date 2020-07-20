@@ -183,7 +183,7 @@ public class Ghost extends Sprite {
 				}
 				
 			} else {
-				//TODO: Exception - No Mode
+				//TODO: EXCEPTION: No Mode
 			}
 		}
 	}
