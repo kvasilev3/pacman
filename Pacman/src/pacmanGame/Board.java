@@ -324,7 +324,7 @@ public class Board extends JPanel {
 					}
 				}
 				
-				
+				//attempts
 //				String pacmanScore = Integer.toString(score);
 //				JLabel pacScore = new JLabel (pacmanScore, JLabel.CENTER);
 //				pacScore.setForeground(Color.white);
