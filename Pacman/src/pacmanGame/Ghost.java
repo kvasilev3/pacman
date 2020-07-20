@@ -15,6 +15,8 @@ public class Ghost extends Sprite {
 	protected int chaseY = 0;
 	protected int ghostHouseX = 70;
 	protected int ghostHouseY = 57;
+	protected int inGhostHouseX = 0;
+	protected int inGhostHouseY = 0;
 	protected Image[] frightenedGhost = {
 			new ImageIcon("Pacman/src/resources/escaping_ghost_1.png").getImage(),
 			new ImageIcon("Pacman/src/resources/escaping_ghost_2.png").getImage()
@@ -23,7 +25,7 @@ public class Ghost extends Sprite {
 
 	public Direction[] getPossibleDirections(int x, int y, Direction currentDirection) {
 		ArrayList<Direction> possibleDirections = new ArrayList<>();
-		if (getMode() == "GHOSTHOUSE") {
+		if (getMode() == "GHOST_HOUSE") {
 			if (Board.getSingleton().isTileWalkable(x, y - 1)) {
 				possibleDirections.add(Direction.Up);
 			}
@@ -114,7 +116,7 @@ public class Ghost extends Sprite {
 				this.direction = possibleDirections[index];
 				
 			} else if (getMode() == "SCATTER") {
-				Direction minPathScatter = ts.findMinPath(x, y, getTargetX(pacman, blinky), getTargetX(pacman, blinky), direction);
+				Direction minPathScatter = ts.findMinPath(x, y, getTargetX(pacman, blinky), getTargetY(pacman, blinky), direction);
 				this.x += minPathScatter.getDeltaX();
 				this.y += minPathScatter.getDeltaY();
 				this.direction = minPathScatter;
@@ -127,7 +129,7 @@ public class Ghost extends Sprite {
 				
 			} else if (getMode() == "EATEN") {
 				if (x == getTargetX(pacman, blinky) && y == getTargetY(pacman, blinky)) {
-					setMode("GHOSTHOUSE");
+					setMode("GHOST_HOUSE");
 				} else {
 					Direction minPathEaten = ts.findMinPath(x, y, 70, 57, direction);
 					this.x += minPathEaten.getDeltaX();
@@ -135,8 +137,11 @@ public class Ghost extends Sprite {
 					this.direction = minPathEaten;
 				}
 				
-			} else if (getMode() == "GHOSTHOUSE") {
-				
+			} else if (getMode() == "GHOST_HOUSE") {
+				Direction minPathGH = ts.findMinPath(x, y, getTargetX(pacman, blinky), getTargetY(pacman, blinky), direction);
+				this.x += minPathGH.getDeltaX();
+				this.y += minPathGH.getDeltaY();
+				this.direction = minPathGH;
 				
 			} else {
 				//TODO: Exception - No Mode

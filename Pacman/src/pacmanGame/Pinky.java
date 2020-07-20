@@ -24,7 +24,10 @@ public class Pinky extends Ghost {
 		
 		scatterX = 10;
 		scatterY = -20;
-		mode = "GHOSTHOUSE";
+		inGhostHouseX = 70;
+		inGhostHouseY = 155;
+		
+		mode = "GHOST_HOUSE";
 	}
 	
 	@Override

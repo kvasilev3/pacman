@@ -29,6 +29,7 @@ public class Board extends JPanel {
 	private final int GHOSTS_DELAY = 1000 / GHOSTS_MOVEMENTS_PER_SECOND; // ms
 	private final int REDRAW_PER_SECOND = 30;
 	private final int REDRAW_DELAY = 1000 / REDRAW_PER_SECOND; // ms
+	private final int FRAME = REDRAW_DELAY;
 	private Image background;
 	private Image[] winBackground = {
 			new ImageIcon("Pacman/src/resources/maze_win_1.png").getImage(),
@@ -42,6 +43,8 @@ public class Board extends JPanel {
 	private double timeCount = 0;
 	private double frightenedModeStart = 0;
 	private double frightenedModeEnd = 0;
+	private double modeStart = 0;
+	private int modeCount = 0;
 
 	private final int GRID_WIDTH = 28*5; // The width of the original game was 28 tiles. We've decided to make it 5 times bigger.
 	private final int GRID_HEIGHT = 31*5; // The height of the original game was 31 tiles. We've decided to make it 5 times bigger. 
@@ -67,6 +70,16 @@ public class Board extends JPanel {
 	private ImageIcon clydeTarget = new ImageIcon("Pacman/src/resources/clyde_target.png");
 	
 	private int tiles[][] = new int[GRID_WIDTH][GRID_HEIGHT];
+	private double[] modeSwitches = {
+		//	MINUTES			+ SECONDS	 + FRAMES (1/30 OF SEC)
+			(0 * 60 * 1000) + (7 * 1000) + (0 * FRAME),
+			(0 * 60 * 1000) + (20 * 1000) + (0 * FRAME),
+			(0 * 60 * 1000) + (7 * 1000) + (0 * FRAME),
+			(0 * 60 * 1000) + (20 * 1000) + (0 * FRAME),
+			(0 * 60 * 1000) + (5 * 1000) + (0 * FRAME),
+			(17 * 60 * 1000) + (13 * 1000) + (14 * FRAME),
+			(0 * 60 * 1000) + (0 * 1000) + (1 * FRAME)
+	};
 	private int score = 0;
 	public int lives = 3;
 
@@ -189,7 +202,6 @@ public class Board extends JPanel {
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		timeCount += REDRAW_DELAY;
-		System.out.println(timeCount/1000);
 		int p = 0;
 
 		Graphics2D g2d = (Graphics2D) g;
@@ -301,8 +313,10 @@ public class Board extends JPanel {
 				frightenedModeStart = timeCount;
 				frightenedModeEnd = frightenedModeStart + 8000;
 				for (int i = 0; i < ghosts.length; i++) {
-					ghosts[i].setMode("FRIGHTENED");
-					ghosts[i].direction = ghosts[i].direction.oppositeDirection();
+					if (ghosts[i].getMode() == "SCATTER" || ghosts[i].getMode() == "CHASE") {
+						ghosts[i].setMode("FRIGHTENED");
+						ghosts[i].direction = ghosts[i].direction.oppositeDirection();
+					}
 				}
 				System.out.println("Score: " + score);
 			}
@@ -313,11 +327,40 @@ public class Board extends JPanel {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if (timeCount + REDRAW_DELAY >= frightenedModeEnd) {
+			if (timeCount + REDRAW_DELAY >= frightenedModeEnd && frightenedModeEnd != 0) {
 				for (int i = 0; i < ghosts.length; i++) {
-					ghosts[i].setMode("CHASE");
+					ghosts[i].setMode(ghosts[i].getSecondaryMode());
+					ghosts[i].direction = ghosts[i].direction.oppositeDirection();
 				}
 			}
+			if (modeCount >= modeSwitches.length) {
+				ghosts[0].setSecondaryMode("CHASE");
+				
+			} else {
+				if (timeCount - modeStart >= modeSwitches[modeCount]) {
+					modeCount++;
+					if (modeCount % 2 == 0) {
+						for (int i = 0; i < ghosts.length; i++) {
+							ghosts[i].setSecondaryMode("SCATTER");
+							modeStart = timeCount;
+							if (ghosts[i].getMode() == "CHASE") {
+								ghosts[i].setMode(ghosts[i].secondaryMode);
+								ghosts[i].direction = ghosts[i].direction.oppositeDirection();
+							}
+						}
+					} else {
+						for (int i = 0; i < ghosts.length; i++) {
+							ghosts[i].setSecondaryMode("CHASE");
+							modeStart = timeCount;
+							if (ghosts[i].getMode() == "SCATTER") {
+								ghosts[i].setMode(ghosts[i].secondaryMode);
+								ghosts[i].direction = ghosts[i].direction.oppositeDirection();
+							}
+						}
+					}
+				}
+			}
+			
 			if (pacmanDead || levelComplete) {
 				return;
 			}
@@ -341,6 +384,8 @@ public class Board extends JPanel {
 						pacmanDead = true;
 						pacman.setPacmansLife(pacmanDead);
 						lives  -= 1;
+						modeCount = 0;
+						modeStart = 0;
 						
 						System.out.println("Pacman was eaten");
 					}

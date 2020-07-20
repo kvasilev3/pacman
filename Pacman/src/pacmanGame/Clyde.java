@@ -24,7 +24,7 @@ public class Clyde extends Ghost {
 		
 		scatterX = 0;
 		scatterY = 155;
-		mode = "GHOSTHOUSE";
+		mode = "GHOST_HOUSE";
 	}
 	
 	@Override

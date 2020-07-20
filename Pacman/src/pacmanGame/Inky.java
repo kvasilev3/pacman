@@ -24,7 +24,10 @@ public class Inky extends Ghost {
 		
 		scatterX = 135;
 		scatterY = 155;
-		mode = "GHOSTHOUSE";
+		inGhostHouseX = 135;
+		inGhostHouseY = 155;
+		
+		mode = "GHOST_HOUSE";
 	}
 	
 	@Override
@@ -33,6 +36,8 @@ public class Inky extends Ghost {
 			return scatterX;
 		} else if (getMode() == "EATEN") {
 			return ghostHouseX;
+		} else if (getMode() == "GHOST_HOUSE") {
+			return inGhostHouseX;
 		} else {
 			chaseX = pacman.getX();
 			int blinkyX = blinky.getX();
@@ -59,6 +64,8 @@ public class Inky extends Ghost {
 			return scatterY;
 		} else if (getMode() == "EATEN") {
 			return ghostHouseY;
+		} else if (getMode() == "GHOST_HOUSE") {
+			return inGhostHouseY;
 		} else {
 			int blinkyY = blinky.getY();
 			if (pacman.direction == Direction.Up) {

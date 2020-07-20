@@ -6,6 +6,7 @@ public class Sprite {
 	protected int x;
 	protected int y;
 	protected Direction direction;
+	public String secondaryMode = "CHASE";
 	
 	public int getX() {
 		return x;
@@ -51,5 +52,13 @@ public class Sprite {
 	}
 	
 	protected void init() {
+	}
+
+	public void setSecondaryMode(String mode) {
+		secondaryMode = mode;
+	}
+	
+	public String getSecondaryMode() {
+		return secondaryMode;
 	}
 }

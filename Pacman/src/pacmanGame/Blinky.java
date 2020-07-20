@@ -22,9 +22,9 @@ public class Blinky extends Ghost {
 		y = 57;
 		direction = Direction.Left;
 		
-		scatterX = 125;
-		scatterY = -20;
-		mode = "CHASE";
+		scatterX = 130;
+		scatterY = 0;
+		mode = "SCATTER";
 	}
 
 	@Override
