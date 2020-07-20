@@ -5,7 +5,7 @@ import javax.swing.ImageIcon;
 
 public class Inky extends Ghost {
 	
-	private int i = 0;
+	private double i = 0;
 	private Image[] cyanGhost = {
 			new ImageIcon("Pacman/src/resources/inky_1.png").getImage(),
 			new ImageIcon("Pacman/src/resources/inky_2.png").getImage()
@@ -87,12 +87,12 @@ public class Inky extends Ghost {
 
 	@Override
 	public Image getImage() {
-		i++;
+		i += 0.5;
 		if (mode == "FRIGHTENED") {
 			if (i >= frightenedGhost.length) {
 				i = 0;
 			}
-			return frightenedGhost[i];
+			return frightenedGhost[(int) i];
 		} else if (mode == "EATEN") {
 			return null;
 		}else {
@@ -100,6 +100,6 @@ public class Inky extends Ghost {
 				i = 0;
 			}
 		}
-		return cyanGhost[i];
+		return cyanGhost[(int) i];
 	}
 }

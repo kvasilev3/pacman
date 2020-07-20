@@ -5,7 +5,7 @@ import javax.swing.ImageIcon;
 
 public class Blinky extends Ghost {
 
-	private int i = 0;
+	private double i = 0;
 	private Image[] redGhost = {
 			new ImageIcon("Pacman/src/resources/blinky_1.png").getImage(),
 			new ImageIcon("Pacman/src/resources/blinky_2.png").getImage()
@@ -53,19 +53,19 @@ public class Blinky extends Ghost {
 	
 	@Override
 	public Image getImage() {
-		i++;
+		i += 0.5;
 		if (mode == "FRIGHTENED") {
 			if (i >= frightenedGhost.length) {
 				i = 0;
 			}
-			return frightenedGhost[i];
+			return frightenedGhost[(int) i];
 		} else if (mode == "EATEN") {
 			return null;
 		} else {
 			if (i >= redGhost.length) {
 				i = 0;
 			}
-			return redGhost[i];
+			return redGhost[(int) i];
 		}
 	}
 }

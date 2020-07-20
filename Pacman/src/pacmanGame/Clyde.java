@@ -5,7 +5,7 @@ import javax.swing.ImageIcon;
 
 public class Clyde extends Ghost {
 	
-	private int i = 0;
+	private double i = 0;
 	private Image[] yellowGhost = {
 			new ImageIcon("Pacman/src/resources/clyde_1.png").getImage(),
 			new ImageIcon("Pacman/src/resources/clyde_2.png").getImage()
@@ -63,12 +63,12 @@ public class Clyde extends Ghost {
 	
 	@Override
 	public Image getImage() {
-		i++;
+		i += 0.5;
 		if (mode == "FRIGHTENED") {
 			if (i >= frightenedGhost.length) {
 				i = 0;
 			}
-			return frightenedGhost[i];
+			return frightenedGhost[(int) i];
 		} else if (mode == "EATEN") {
 			return null;
 		}else {
@@ -76,6 +76,6 @@ public class Clyde extends Ghost {
 				i = 0;
 			}
 		}
-		return yellowGhost[i];
+		return yellowGhost[(int) i];
 	}
 }
