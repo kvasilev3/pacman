@@ -2,11 +2,15 @@ package pacmanGame;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.font.FontRenderContext;
+import java.awt.font.TextLayout;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -65,7 +69,7 @@ public class Board extends JPanel {
 	
 	private ImageIcon pacmanLives = new ImageIcon("Pacman/src/resources/pacman_right_1.png");
 	
-	private boolean debuggerMode = true;
+	private boolean debuggerMode = false;
 	private ImageIcon grid = new ImageIcon("Pacman/src/resources/tiles_grid.png");
 	private ImageIcon blinkyTarget = new ImageIcon("Pacman/src/resources/blinky_target.png");
 	private ImageIcon inkyTarget = new ImageIcon("Pacman/src/resources/inky_target.png");
@@ -275,7 +279,7 @@ public class Board extends JPanel {
 					} else if (ghosts[i].direction == Direction.Right) {
 						g2d.drawImage(eyesRight.getImage(), convertX(ghosts[i].getX()), convertY(ghosts[i].getY()), this);
 					} else {
-						System.out.println(ghosts[i] + "has no direction!");
+						//TODO: EXCEPTION: ghosts[i] has no direction
 					}
 				}
 			}
@@ -297,6 +301,30 @@ public class Board extends JPanel {
 		for (int i = 0; i < lives; i++) {
 			g2d.drawImage(pacmanLives.getImage(), (i * 30) + 5, convertY(32 * 5), this);
 		}
+		String pacmanScore = Integer.toString(score);
+		
+		g2d.setColor(Color.WHITE);
+		g2d.setFont(new Font("Arial", Font.BOLD, 15));
+		g2d.drawString(pacmanScore, getCenteredTextCoordinates(g2d, pacmanScore)[0], getCenteredTextCoordinates(g2d, pacmanScore)[1]);
+		g2d.drawString("SCORE:", getCenteredTextCoordinates(g2d, "SCORE:")[0], 15);
+	}
+	
+	private int[] getCenteredTextCoordinates(Graphics2D g2d, String text) {
+		FontRenderContext context = g2d.getFontRenderContext();
+		Font font = new Font("Arial", Font.BOLD, 15);
+		TextLayout txt = new TextLayout(text, font, context);
+
+		Rectangle2D bounds = txt.getBounds();
+		int x = (int) ((getWidth() - (int) bounds.getWidth()) / 2);
+		int y = (int) convertX(10);
+		y += txt.getAscent() - txt.getDescent();
+		
+		int[] coords = {
+				x,
+				y
+		};
+		
+		return coords;
 	}
 	
 	private int convertX(int x) {
@@ -327,7 +355,6 @@ public class Board extends JPanel {
 			if (tiles[pacman.getY()][pacman.getX()] == TILE_HAS_PELLET) {
 				tiles[pacman.getY()][pacman.getX()] = TILE_NO_PELLET;
 				score += 10;
-				System.out.println("Score: " + score);
 			} else if (tiles[pacman.getY()][pacman.getX()] == TILE_HAS_POWER_PELLET) {
 				tiles[pacman.getY()][pacman.getX()] = TILE_NO_PELLET;
 				score += 50;
@@ -339,14 +366,6 @@ public class Board extends JPanel {
 						ghosts[i].direction = ghosts[i].direction.oppositeDirection();				
 					}
 				}
-				
-				//attempts
-//				String pacmanScore = Integer.toString(score);
-//				JLabel pacScore = new JLabel (pacmanScore, JLabel.CENTER);
-//				pacScore.setForeground(Color.white);
-					
-//					g.drawString(pacmanScore, convertX(100), convertY(100));
-					System.out.println("Score: " + score);
 			}
 		}
 	}
@@ -409,7 +428,6 @@ public class Board extends JPanel {
 					if (ghosts[i].getMode() == "FRIGHTENED") {
 						ghosts[i].setMode("EATEN");
 						score += 200;
-						System.out.println("Score: " + score);
 					} else if (ghosts[i].getMode() == "EATEN") {
 					} else {
 						pacmanDead = true;
@@ -417,8 +435,6 @@ public class Board extends JPanel {
 						lives  -= 1;
 						modeCount = 0;
 						modeStart = 0;
-						
-						System.out.println("Pacman was eaten");
 					}
 				}
 			}

@@ -109,14 +109,14 @@ public class Ghost extends Sprite {
 			}
 		}
 		
-		if (getMode() == "EATEN") {
+		/*if (getMode() == "EATEN") {
 			if (x == 70 && y == 57) {
 				setMode("GHOST_HOUSE");
 				this.x += Direction.Down.getDeltaX();
 				this.y += Direction.Down.getDeltaY();
 				this.direction = Direction.Down;
 			}
-		}
+		}*/
 		
 		if (possibleDirections.length < 1) {
 			return;
@@ -130,7 +130,6 @@ public class Ghost extends Sprite {
 			
 			if (getMode() == "EATEN") {
 				if (x == 70 && y == 57) {
-					setMode("GHOST_HOUSE");
 					this.x += Direction.Down.getDeltaX();
 					this.y += Direction.Down.getDeltaY();
 					this.direction = Direction.Down;
@@ -148,22 +147,25 @@ public class Ghost extends Sprite {
 				this.direction = possibleDirections[index];
 				
 			} else if (getMode() == "SCATTER") {
-				Direction minPathScatter = ts.findMinPath(x, y, getTargetX(pacman, blinky), getTargetY(pacman, blinky), direction);
+				Direction minPathScatter = ts.findMinPath(x, y, getTargetX(pacman, blinky), getTargetY(pacman, blinky), direction, possibleDirections);
 				this.x += minPathScatter.getDeltaX();
 				this.y += minPathScatter.getDeltaY();
 				this.direction = minPathScatter;
 				
 			} else if (getMode() == "CHASE") {
-				Direction minPathChase = ts.findMinPath(x, y, getTargetX(pacman, blinky), getTargetY(pacman, blinky), direction);
+				Direction minPathChase = ts.findMinPath(x, y, getTargetX(pacman, blinky), getTargetY(pacman, blinky), direction, possibleDirections);
 				this.x += minPathChase.getDeltaX();
 				this.y += minPathChase.getDeltaY();
 				this.direction = minPathChase;
 				
 			} else if (getMode() == "EATEN") {
 				if (x == getTargetX(pacman, blinky) && y == getTargetY(pacman, blinky)) {
-					setMode("GHOST_HOUSE");
+					setMode(getSecondaryMode());
+					this.x += this.direction.oppositeDirection().getDeltaX();
+					this.y += this.direction.oppositeDirection().getDeltaY();
+					this.direction = this.direction.oppositeDirection();
 				} else {
-					Direction minPathEaten = ts.findMinPath(x, y, 70, 57, direction);
+					Direction minPathEaten = ts.findMinPath(x, y, getTargetX(pacman, blinky), getTargetY(pacman, blinky), direction, possibleDirections);
 					this.x += minPathEaten.getDeltaX();
 					this.y += minPathEaten.getDeltaY();
 					this.direction = minPathEaten;
@@ -174,7 +176,7 @@ public class Ghost extends Sprite {
 					setMode(getSecondaryMode());
 					System.out.println("Set to secondary mode");
 				} else {
-					Direction minPathGH = ts.findMinPath(x, y, getTargetX(pacman, blinky), getTargetY(pacman, blinky), direction);
+					Direction minPathGH = ts.findMinPath(x, y, getTargetX(pacman, blinky), getTargetY(pacman, blinky), direction, possibleDirections);
 					this.x += minPathGH.getDeltaX();
 					this.y += minPathGH.getDeltaY();
 					this.direction = minPathGH;
