@@ -6,7 +6,7 @@ public class Sprite {
 	protected int x;
 	protected int y;
 	protected Direction direction;
-	public String secondaryMode = "CHASE";
+	public String secondaryMode = "SCATTER";
 	
 	public int getX() {
 		return x;
@@ -28,7 +28,7 @@ public class Sprite {
 		
 	}
 	
-	public Image getImage() {
+	public Image getImage(double frightenedModeStart, double timeCount) {
 		return null;
 	}
 	

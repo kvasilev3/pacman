@@ -24,8 +24,6 @@ public class Inky extends Ghost {
 		
 		scatterX = 135;
 		scatterY = 155;
-		inGhostHouseX = 135;
-		inGhostHouseY = 155;
 		
 		mode = "GHOST_HOUSE";
 	}
@@ -86,16 +84,13 @@ public class Inky extends Ghost {
 	}
 
 	@Override
-	public Image getImage() {
+	public Image getImage(double frightenedModeStart, double timeCount) {
 		i += 0.5;
 		if (mode == "FRIGHTENED") {
-			if (i >= frightenedGhost.length) {
-				i = 0;
-			}
-			return frightenedGhost[(int) i];
+			return getFrightenedImage(frightenedModeStart, timeCount);
 		} else if (mode == "EATEN") {
 			return null;
-		}else {
+		} else {
 			if (i >= cyanGhost.length) {
 				i = 0;
 			}

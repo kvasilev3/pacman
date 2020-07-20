@@ -20,12 +20,10 @@ public class Pinky extends Ghost {
 		//Starting Position
 		x = 70;
 		y = 69;
-		direction = Direction.Up;
+		direction = Direction.Down;
 		
 		scatterX = 10;
 		scatterY = -20;
-		inGhostHouseX = 70;
-		inGhostHouseY = 155;
 		
 		mode = "GHOST_HOUSE";
 	}
@@ -36,6 +34,8 @@ public class Pinky extends Ghost {
 			return scatterX;
 		} else if (getMode() == "EATEN") {
 			return ghostHouseX;
+		} else if (getMode() == "GHOST_HOUSE") {
+			return inGhostHouseX;
 		} else {
 			if (pacman.direction == Direction.Up) {
 				chaseX = pacman.getX() - (4 * 5);
@@ -56,6 +56,8 @@ public class Pinky extends Ghost {
 			return scatterY;
 		} else if (getMode() == "EATEN") {
 			return ghostHouseY;
+		} else if (getMode() == "GHOST_HOUSE") {
+			return inGhostHouseY;
 		} else {
 			if (pacman.direction == Direction.Up) {
 				chaseY = pacman.getY() - (4 * 5);
@@ -71,13 +73,10 @@ public class Pinky extends Ghost {
 	}
 	
 	@Override
-	public Image getImage() {
+	public Image getImage(double frightenedModeStart, double timeCount) {
 		i += 0.5;
 		if (mode == "FRIGHTENED") {
-			if (i >= frightenedGhost.length) {
-				i = 0;
-			}
-			return frightenedGhost[(int) i];
+			return getFrightenedImage(frightenedModeStart, timeCount);
 		} else if (mode == "EATEN") {
 			return null;
 		}else {

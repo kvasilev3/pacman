@@ -33,6 +33,8 @@ public class Clyde extends Ghost {
 			return scatterX;
 		} else if (getMode() == "EATEN") {
 			return ghostHouseX;
+		} else if (getMode() == "GHOST_HOUSE") {
+			return inGhostHouseY;
 		} else {
 			double distanceToPacman = Math.sqrt(Math.pow(pacman.getX() - getX(), 2) + Math.pow(pacman.getY() - getY(), 2));
 			if (distanceToPacman <= (8 * 5)) {
@@ -50,6 +52,8 @@ public class Clyde extends Ghost {
 			return scatterY;
 		} else if (getMode() == "EATEN") {
 			return ghostHouseY;
+		} else if (getMode() == "GHOST_HOUSE") {
+			return inGhostHouseY;
 		} else {
 			double distanceToPacman = Math.sqrt(Math.pow(pacman.getX() - getX(), 2) + Math.pow(pacman.getY() - getY(), 2));
 			if (distanceToPacman <= (8 * 5)) {
@@ -62,13 +66,10 @@ public class Clyde extends Ghost {
 	}
 	
 	@Override
-	public Image getImage() {
+	public Image getImage(double frightenedModeStart, double timeCount) {
 		i += 0.5;
 		if (mode == "FRIGHTENED") {
-			if (i >= frightenedGhost.length) {
-				i = 0;
-			}
-			return frightenedGhost[(int) i];
+			return getFrightenedImage(frightenedModeStart, timeCount);
 		} else if (mode == "EATEN") {
 			return null;
 		}else {

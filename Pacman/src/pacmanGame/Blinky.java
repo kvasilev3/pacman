@@ -5,7 +5,6 @@ import javax.swing.ImageIcon;
 
 public class Blinky extends Ghost {
 
-	private double i = 0;
 	private Image[] redGhost = {
 			new ImageIcon("Pacman/src/resources/blinky_1.png").getImage(),
 			new ImageIcon("Pacman/src/resources/blinky_2.png").getImage()
@@ -33,6 +32,8 @@ public class Blinky extends Ghost {
 			return scatterX;
 		} else if (getMode() == "EATEN") {
 			return ghostHouseX;
+		} else if (getMode() == "GHOST_HOUSE") {
+			return inGhostHouseX;
 		} else {
 			chaseX = pacman.getX();
 			return chaseX;
@@ -45,6 +46,8 @@ public class Blinky extends Ghost {
 			return scatterY;
 		} else if (getMode() == "EATEN") {
 			return ghostHouseY;
+		} else if (getMode() == "GHOST_HOUSE") {
+			return inGhostHouseY;
 		} else {
 			chaseY = pacman.getY();
 			return chaseY;
@@ -52,13 +55,10 @@ public class Blinky extends Ghost {
 	}
 	
 	@Override
-	public Image getImage() {
+	public Image getImage(double frightenedModeStart, double timeCount) {
 		i += 0.5;
 		if (mode == "FRIGHTENED") {
-			if (i >= frightenedGhost.length) {
-				i = 0;
-			}
-			return frightenedGhost[(int) i];
+			return getFrightenedImage(frightenedModeStart, timeCount);
 		} else if (mode == "EATEN") {
 			return null;
 		} else {
