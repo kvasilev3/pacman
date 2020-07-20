@@ -54,6 +54,7 @@ public class Board extends JPanel {
 	private final int TILE_HAS_PELLET = 2;
 	private final int TILE_HAS_POWER_PELLET = 3;
 	private final int TILE_NO_PELLET = 4;
+	private final int TILE_IS_WALKABLE_GHOST_HOUSE = 5;
 	
 	private ImageIcon eyesUp = new ImageIcon("Pacman/src/resources/eyes_up.png");
 	private ImageIcon eyesLeft = new ImageIcon("Pacman/src/resources/eyes_left.png");
@@ -62,7 +63,7 @@ public class Board extends JPanel {
 	
 	private ImageIcon pacmanLives = new ImageIcon("Pacman/src/resources/pacman_right_1.png");
 	
-	private boolean debuggerMode = false;
+	private boolean debuggerMode = true;
 	private ImageIcon grid = new ImageIcon("Pacman/src/resources/tiles_grid.png");
 	private ImageIcon blinkyTarget = new ImageIcon("Pacman/src/resources/blinky_target.png");
 	private ImageIcon inkyTarget = new ImageIcon("Pacman/src/resources/inky_target.png");
@@ -152,6 +153,7 @@ public class Board extends JPanel {
 		final int BLUE = 0xFF0000FF;
 		final int GREEN = 0xFF00FF00;
 		final int RED = 0xFFFF0000;
+		final int YELLOW = 0xFFFFFF00;
 		
 		tiles = new int[GRID_HEIGHT][GRID_WIDTH];
 		
@@ -181,6 +183,8 @@ public class Board extends JPanel {
 					tiles[y][x] = TILE_HAS_PELLET;
 				} else if (color == RED) {
 					tiles[y][x] = TILE_HAS_POWER_PELLET;
+				} else if (color == YELLOW) {
+					tiles[y][x] = TILE_IS_WALKABLE_GHOST_HOUSE;
 				}
 			}
 		}
@@ -190,12 +194,24 @@ public class Board extends JPanel {
 		return singleton;
 	}
 	
-	public boolean isTileWalkable(int x, int y) {
+	public boolean isTileWalkable(int x, int y, boolean canWalkIntoGhostHouse) {
 		if (x < 0 || x >= GRID_WIDTH)
 			return false;
 		if (y < 0 || y >= GRID_HEIGHT)
 			return false;
-		return tiles[y][x] > TILE_IS_NOT_WALKABLE;
+		if (canWalkIntoGhostHouse) {
+			return tiles[y][x] > TILE_IS_NOT_WALKABLE;
+		} else {
+			return tiles[y][x] > TILE_IS_NOT_WALKABLE && tiles[y][x] < TILE_IS_WALKABLE_GHOST_HOUSE;
+		}
+	}
+	
+	public boolean isTileWalkable(int x, int y) {
+		return isTileWalkable(x, y, false);
+	}
+	
+	public boolean isTileInGhostHouse(int x, int y) {
+		return tiles[y][x] == TILE_IS_WALKABLE_GHOST_HOUSE;
 	}
 
 	@Override
@@ -220,7 +236,7 @@ public class Board extends JPanel {
 		}
 		if (debuggerMode) {
 			g2d.drawImage(grid.getImage(), 0, 0, this);
-			p -= 230;
+			//p -= 230;
 		}
 		
 		for (int y=0; y<GRID_HEIGHT; y++) {
@@ -243,7 +259,7 @@ public class Board extends JPanel {
 		if (!pacmanDead && !levelComplete) {
 			for (int i = 0; i < ghosts.length; i++) {
 				
-				g2d.drawImage(ghosts[i].getImage(), convertX(ghosts[i].getX()), convertY(ghosts[i].getY()), this);
+				g2d.drawImage(ghosts[i].getImage(frightenedModeStart, timeCount), convertX(ghosts[i].getX()), convertY(ghosts[i].getY()), this);
 				
 				if (ghosts[i].getMode() != "FRIGHTENED") {
 					if (ghosts[i].direction == Direction.Up) {
