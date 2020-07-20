@@ -38,7 +38,10 @@ public class Board extends JPanel {
 	private Image powerPellet;
 	private boolean pacmanDead = false;
 	private boolean levelComplete = false;
-	private double winCount = 0.000000000000000;
+	private double winCount = 0;
+	private double timeCount = 0;
+	private double frightenedModeStart = 0;
+	private double frightenedModeEnd = 0;
 
 	private final int GRID_WIDTH = 28*5; // The width of the original game was 28 tiles. We've decided to make it 5 times bigger.
 	private final int GRID_HEIGHT = 31*5; // The height of the original game was 31 tiles. We've decided to make it 5 times bigger. 
@@ -56,7 +59,7 @@ public class Board extends JPanel {
 	
 	private ImageIcon pacmanLives = new ImageIcon("Pacman/src/resources/pacman_right_1.png");
 	
-	private boolean debuggerMode = true;
+	private boolean debuggerMode = false;
 	private ImageIcon grid = new ImageIcon("Pacman/src/resources/tiles_grid.png");
 	private ImageIcon blinkyTarget = new ImageIcon("Pacman/src/resources/blinky_target.png");
 	private ImageIcon inkyTarget = new ImageIcon("Pacman/src/resources/inky_target.png");
@@ -185,6 +188,8 @@ public class Board extends JPanel {
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
+		timeCount += REDRAW_DELAY;
+		System.out.println(timeCount/1000);
 		int p = 0;
 
 		Graphics2D g2d = (Graphics2D) g;
@@ -293,6 +298,8 @@ public class Board extends JPanel {
 			} else if (tiles[pacman.getY()][pacman.getX()] == TILE_HAS_POWER_PELLET) {
 				tiles[pacman.getY()][pacman.getX()] = TILE_NO_PELLET;
 				score += 50;
+				frightenedModeStart = timeCount;
+				frightenedModeEnd = frightenedModeStart + 8000;
 				for (int i = 0; i < ghosts.length; i++) {
 					ghosts[i].setMode("FRIGHTENED");
 					ghosts[i].direction = ghosts[i].direction.oppositeDirection();
@@ -306,6 +313,11 @@ public class Board extends JPanel {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			if (timeCount + REDRAW_DELAY >= frightenedModeEnd) {
+				for (int i = 0; i < ghosts.length; i++) {
+					ghosts[i].setMode("CHASE");
+				}
+			}
 			if (pacmanDead || levelComplete) {
 				return;
 			}
