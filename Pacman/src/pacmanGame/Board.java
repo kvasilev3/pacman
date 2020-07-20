@@ -14,9 +14,11 @@ import javax.imageio.ImageIO;
 import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 import javax.swing.Timer;
+import javax.swing.text.TextAction;
 
 public class Board extends JPanel {
 
@@ -69,6 +71,7 @@ public class Board extends JPanel {
 	private ImageIcon pinkyTarget = new ImageIcon("Pacman/src/resources/pinky_target.png");
 	private ImageIcon clydeTarget = new ImageIcon("Pacman/src/resources/clyde_target.png");
 	
+	
 	private int tiles[][] = new int[GRID_WIDTH][GRID_HEIGHT];
 	private double[] modeSwitches = {
 		//	MINUTES			+ SECONDS	 + FRAMES (1/30 OF SEC)
@@ -82,6 +85,7 @@ public class Board extends JPanel {
 	};
 	private int score = 0;
 	public int lives = 3;
+	
 
 	private static Board singleton = new Board();
 	
@@ -291,6 +295,7 @@ public class Board extends JPanel {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+				
 			if (pacmanDead || levelComplete) {
 				return;
 			}
@@ -315,10 +320,17 @@ public class Board extends JPanel {
 				for (int i = 0; i < ghosts.length; i++) {
 					if (ghosts[i].getMode() == "SCATTER" || ghosts[i].getMode() == "CHASE") {
 						ghosts[i].setMode("FRIGHTENED");
-						ghosts[i].direction = ghosts[i].direction.oppositeDirection();
+						ghosts[i].direction = ghosts[i].direction.oppositeDirection();				
 					}
 				}
-				System.out.println("Score: " + score);
+				
+				
+//				String pacmanScore = Integer.toString(score);
+//				JLabel pacScore = new JLabel (pacmanScore, JLabel.CENTER);
+//				pacScore.setForeground(Color.white);
+					
+//					g.drawString(pacmanScore, convertX(100), convertY(100));
+					System.out.println("Score: " + score);
 			}
 		}
 	}
