@@ -329,9 +329,12 @@ public class Board extends JPanel {
 		public void actionPerformed(ActionEvent e) {
 			if (timeCount + REDRAW_DELAY >= frightenedModeEnd && frightenedModeEnd != 0) {
 				for (int i = 0; i < ghosts.length; i++) {
-					ghosts[i].setMode(ghosts[i].getSecondaryMode());
-					ghosts[i].direction = ghosts[i].direction.oppositeDirection();
+					if (ghosts[i].getMode() == "FRIGHTENED") {
+						ghosts[i].setMode(ghosts[i].getSecondaryMode());
+						ghosts[i].direction = ghosts[i].direction.oppositeDirection();
+					}
 				}
+				frightenedModeEnd = 0;
 			}
 			if (modeCount >= modeSwitches.length) {
 				ghosts[0].setSecondaryMode("CHASE");
