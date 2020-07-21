@@ -35,25 +35,29 @@ public class Ghost extends Sprite {
 		ArrayList<Direction> possibleDirections = new ArrayList<>();
 		boolean canEnterGhostHouse = Board.getSingleton().isTileInGhostHouse(x, y) || getMode() == "EATEN";
 		if (getMode() == "GHOST_HOUSE") {
-			if (currentDirection == Direction.Up) {
-				if (Board.getSingleton().isTileWalkable(x, y - 1, true)) {
-					possibleDirections.add(Direction.Up);
-				} else {
-					possibleDirections.add(Direction.Down);
-				}
+			if (x == 70 && y == 69) {
+				possibleDirections.add(Direction.Down);
 			} else {
-				if (Board.getSingleton().isTileWalkable(x, y + 1, true)) {
-					possibleDirections.add(Direction.Down);
+				if (currentDirection == Direction.Up) {
+					if (Board.getSingleton().isTileWalkable(x, y - 1, true)) {
+						possibleDirections.add(Direction.Up);
+					} else {
+						possibleDirections.add(Direction.Down);
+					}
 				} else {
-					possibleDirections.add(Direction.Up);
+					if (Board.getSingleton().isTileWalkable(x, y + 1, true)) {
+						possibleDirections.add(Direction.Down);
+					} else {
+						possibleDirections.add(Direction.Up);
+					}
 				}
-			}
-			if (canTurnGhostHouse) {
-				if (Board.getSingleton().isTileWalkable(x - 1, y, true)) {
-					possibleDirections.add(Direction.Left);
-				}
-				if (Board.getSingleton().isTileWalkable(x + 1, y, true)) {
-					possibleDirections.add(Direction.Right);
+				if (canTurnGhostHouse) {
+					if (Board.getSingleton().isTileWalkable(x - 1, y, true)) {
+						possibleDirections.add(Direction.Left);
+					}
+					if (Board.getSingleton().isTileWalkable(x + 1, y, true)) {
+						possibleDirections.add(Direction.Right);
+					}
 				}
 			}
 			
