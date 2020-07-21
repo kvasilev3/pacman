@@ -15,8 +15,6 @@ public class Ghost extends Sprite {
 	protected int chaseY = 0;
 	protected int ghostHouseX = 70;
 	protected int ghostHouseY = 75;
-	protected int inGhostHouseX = 70;
-	protected int inGhostHouseY = 75;
 	protected double i = 0;
 	private int j = 0;
 	protected Image[] frightenedGhost = {
@@ -27,6 +25,11 @@ public class Ghost extends Sprite {
 			};
 	private TargettingSystem ts = new TargettingSystem();
 
+	public Ghost() {
+		inGhostHouseY = 75;
+		inGhostHouseX = 70;
+	}
+	
 	private Direction[] getPossibleDirections(int x, int y, Direction currentDirection) {
 		ArrayList<Direction> possibleDirections = new ArrayList<>();
 		boolean canEnterGhostHouse = Board.getSingleton().isTileInGhostHouse(x, y) || getMode() == "EATEN";
@@ -34,12 +37,12 @@ public class Ghost extends Sprite {
 			if (Board.getSingleton().isTileWalkable(x, y - 1, true)) {
 				possibleDirections.add(Direction.Up);
 			}
-			if (Board.getSingleton().isTileWalkable(x - 1, y, true)) {
+			/*if (Board.getSingleton().isTileWalkable(x - 1, y, true)) {
 				possibleDirections.add(Direction.Left);
 			}
 			if (Board.getSingleton().isTileWalkable(x + 1, y, true)) {
 				possibleDirections.add(Direction.Right);
-			}
+			}*/
 			if (Board.getSingleton().isTileWalkable(x, y + 1, true)) {
 				possibleDirections.add(Direction.Down);
 			}
@@ -105,18 +108,13 @@ public class Ghost extends Sprite {
 		if (getMode() == "GHOST_HOUSE") {
 			if (x == getTargetX(pacman, blinky) && y == getTargetY(pacman, blinky)) {
 				setMode(getSecondaryMode());
+				this.direction = this.direction.oppositeDirection();
 				System.out.println("Set to secondary mode");
 			}
-		}
-		
-		/*if (getMode() == "EATEN") {
-			if (x == 70 && y == 57) {
-				setMode("GHOST_HOUSE");
-				this.x += Direction.Down.getDeltaX();
-				this.y += Direction.Down.getDeltaY();
-				this.direction = Direction.Down;
+			if (x == 70 && y == 69) {
+				this.direction = this.direction.oppositeDirection();
 			}
-		}*/
+		}
 		
 		if (possibleDirections.length < 1) {
 			return;

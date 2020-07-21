@@ -22,8 +22,11 @@ public class Clyde extends Ghost {
 		y = 75;
 		direction = Direction.Down;
 		
-		scatterX = 0;
-		scatterY = 155;
+		scatterX = 2;
+		scatterY = 152;
+		inGhostHouseX = 80;
+		inGhostHouseY = 75 + 5;
+		
 		mode = "GHOST_HOUSE";
 	}
 	

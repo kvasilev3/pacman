@@ -22,8 +22,10 @@ public class Inky extends Ghost {
 		y = 75;
 		direction = Direction.Down;
 		
-		scatterX = 135;
-		scatterY = 155;
+		scatterX = 137;
+		scatterY = 152;
+		inGhostHouseX = 59;
+		inGhostHouseY = 75 + 5;
 		
 		mode = "GHOST_HOUSE";
 	}

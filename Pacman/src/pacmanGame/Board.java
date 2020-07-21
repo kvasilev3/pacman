@@ -69,7 +69,7 @@ public class Board extends JPanel {
 	
 	private ImageIcon pacmanLives = new ImageIcon("Pacman/src/resources/pacman_right_1.png");
 	
-	private boolean debuggerMode = false;
+	private boolean debuggerMode = true;
 	private ImageIcon grid = new ImageIcon("Pacman/src/resources/tiles_grid.png");
 	private ImageIcon blinkyTarget = new ImageIcon("Pacman/src/resources/blinky_target.png");
 	private ImageIcon inkyTarget = new ImageIcon("Pacman/src/resources/inky_target.png");
@@ -383,6 +383,11 @@ public class Board extends JPanel {
 				}
 				frightenedModeEnd = 0;
 			}
+			
+			if (timeCount + REDRAW_DELAY >= 1000) ghosts[2].inGhostHouseY = 75;
+			if (timeCount + REDRAW_DELAY >= 2000) ghosts[1].inGhostHouseY = 75;
+			if (timeCount + REDRAW_DELAY >= 3000) ghosts[3].inGhostHouseY = 75;
+			
 			if (modeCount >= modeSwitches.length) {
 				ghosts[0].setSecondaryMode("CHASE");
 				

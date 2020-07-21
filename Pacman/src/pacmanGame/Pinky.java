@@ -20,10 +20,12 @@ public class Pinky extends Ghost {
 		//Starting Position
 		x = 70;
 		y = 69;
-		direction = Direction.Down;
+		direction = Direction.Up;
 		
-		scatterX = 10;
-		scatterY = -20;
+		scatterX = 12;
+		scatterY = -18;
+		inGhostHouseX = 70;
+		inGhostHouseY = 75 + 5;
 		
 		mode = "GHOST_HOUSE";
 	}

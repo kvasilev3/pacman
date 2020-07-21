@@ -7,6 +7,8 @@ public class Sprite {
 	protected int y;
 	protected Direction direction;
 	public String secondaryMode = "SCATTER";
+	protected int inGhostHouseX;
+	protected int inGhostHouseY;
 	
 	public int getX() {
 		return x;

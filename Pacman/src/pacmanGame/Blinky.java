@@ -21,8 +21,11 @@ public class Blinky extends Ghost {
 		y = 57;
 		direction = Direction.Left;
 		
-		scatterX = 130;
-		scatterY = 0;
+		scatterX = 127;
+		scatterY = -18;
+		inGhostHouseX = 70;
+		inGhostHouseY = 75;
+		
 		mode = "SCATTER";
 	}
 
