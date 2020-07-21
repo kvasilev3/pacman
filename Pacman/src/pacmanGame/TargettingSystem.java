@@ -5,14 +5,12 @@ public class TargettingSystem {
 		return Math.sqrt(Math.pow(targetX - currentX, 2) + Math.pow(targetY - (currentY), 2));
 	}
 	
-	public Direction findMinPath(int currentX, int currentY, int targetX, int targetY, Direction direction, Direction[] possibleDirections) {
-		Direction oppositeDirection = direction.oppositeDirection();
+	public Direction findMinPath(int currentX, int currentY, int targetX, int targetY, Direction[] possibleDirections) {
 		
 		Direction directionWithMinDistance = Direction.Up;
 		double minDistance = 1000000;
 		
 		for (int i=0; i<possibleDirections.length; i++) {
-			if (possibleDirections[i] == oppositeDirection) continue;
 			double currentDistance = distanceToTarget(currentX + possibleDirections[i].getDeltaX(), currentY + possibleDirections[i].getDeltaY(), targetX, targetY);
 			if (minDistance > currentDistance) {
 				minDistance = currentDistance;

@@ -26,6 +26,7 @@ public class Pinky extends Ghost {
 		scatterY = -18;
 		inGhostHouseX = 70;
 		inGhostHouseY = 75 + 5;
+		canTurnGhostHouse = false;
 		
 		mode = "GHOST_HOUSE";
 	}

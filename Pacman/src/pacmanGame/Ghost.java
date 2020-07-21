@@ -14,7 +14,8 @@ public class Ghost extends Sprite {
 	protected int chaseX = 0;
 	protected int chaseY = 0;
 	protected int ghostHouseX = 70;
-	protected int ghostHouseY = 75;
+	protected int ghostHouseY = 57;
+	protected boolean canTurnGhostHouse = false;
 	protected double i = 0;
 	private int j = 0;
 	protected Image[] frightenedGhost = {
@@ -26,23 +27,56 @@ public class Ghost extends Sprite {
 	private TargettingSystem ts = new TargettingSystem();
 
 	public Ghost() {
-		inGhostHouseY = 75;
 		inGhostHouseX = 70;
+		inGhostHouseY = 75;
 	}
 	
 	private Direction[] getPossibleDirections(int x, int y, Direction currentDirection) {
 		ArrayList<Direction> possibleDirections = new ArrayList<>();
 		boolean canEnterGhostHouse = Board.getSingleton().isTileInGhostHouse(x, y) || getMode() == "EATEN";
 		if (getMode() == "GHOST_HOUSE") {
-			if (Board.getSingleton().isTileWalkable(x, y - 1, true)) {
-				possibleDirections.add(Direction.Up);
+			if (currentDirection == Direction.Up) {
+				if (Board.getSingleton().isTileWalkable(x, y - 1, true)) {
+					possibleDirections.add(Direction.Up);
+				} else {
+					possibleDirections.add(Direction.Down);
+				}
+			} else {
+				if (Board.getSingleton().isTileWalkable(x, y + 1, true)) {
+					possibleDirections.add(Direction.Down);
+				} else {
+					possibleDirections.add(Direction.Up);
+				}
 			}
-			/*if (Board.getSingleton().isTileWalkable(x - 1, y, true)) {
+			if (canTurnGhostHouse) {
+				if (Board.getSingleton().isTileWalkable(x - 1, y, true)) {
+					possibleDirections.add(Direction.Left);
+				}
+				if (Board.getSingleton().isTileWalkable(x + 1, y, true)) {
+					possibleDirections.add(Direction.Right);
+				}
+			}
+			
+		} else if (x == ghostHouseX && y > 57 && y < 87) {
+			if (Board.getSingleton().isTileWalkable(x, y - 1, true)) {
+			possibleDirections.add(Direction.Up);
+			}
+			if (Board.getSingleton().isTileWalkable(x - 1, y, true)) {
 				possibleDirections.add(Direction.Left);
 			}
 			if (Board.getSingleton().isTileWalkable(x + 1, y, true)) {
 				possibleDirections.add(Direction.Right);
-			}*/
+			}
+			if (Board.getSingleton().isTileWalkable(x, y + 1, true)) {
+				possibleDirections.add(Direction.Down);
+			}
+		} else if ((x > 47 && y > 57) && (x < 92 && y < 87)) {
+			if (Board.getSingleton().isTileWalkable(x - 1, y, true)) {
+				possibleDirections.add(Direction.Left);
+			}
+			if (Board.getSingleton().isTileWalkable(x + 1, y, true)) {
+				possibleDirections.add(Direction.Right);
+			}
 			if (Board.getSingleton().isTileWalkable(x, y + 1, true)) {
 				possibleDirections.add(Direction.Down);
 			}
@@ -105,15 +139,31 @@ public class Ghost extends Sprite {
 	protected void move(Sprite pacman, Sprite blinky) {
 		Direction possibleDirections[] = getPossibleDirections(x, y, direction);
 
+		if (getMode() == "EATEN") {
+			if (x == 70 && y == 57) {
+				setMode("GHOST_HOUSE");
+				this.x += Direction.Down.getDeltaX();
+				this.y += Direction.Down.getDeltaY();
+				this.direction = Direction.Down;
+				canTurnGhostHouse = true;
+				return;
+			}
+		}
+		
 		if (getMode() == "GHOST_HOUSE") {
 			if (x == getTargetX(pacman, blinky) && y == getTargetY(pacman, blinky)) {
 				setMode(getSecondaryMode());
-				this.direction = this.direction.oppositeDirection();
-				System.out.println("Set to secondary mode");
+				this.direction = Direction.Down;
 			}
 			if (x == 70 && y == 69) {
 				this.direction = this.direction.oppositeDirection();
 			}
+		} else if ((x > 47 && y > 57) && (x < 92 && y < 87)) {
+			Direction minPathScatter = ts.findMinPath(x, y, ghostHouseX, ghostHouseY, possibleDirections);
+			this.x += minPathScatter.getDeltaX();
+			this.y += minPathScatter.getDeltaY();
+			this.direction = minPathScatter;
+			return;
 		}
 		
 		if (possibleDirections.length < 1) {
@@ -122,7 +172,7 @@ public class Ghost extends Sprite {
 			if (getMode() == "GHOST_HOUSE") {
 				if (x == getTargetX(pacman, blinky) && y == getTargetY(pacman, blinky)) {
 					setMode(getSecondaryMode());
-					System.out.println("Set to secondary mode");
+					this.direction = Direction.Down;
 				}
 			}
 			
@@ -145,13 +195,13 @@ public class Ghost extends Sprite {
 				this.direction = possibleDirections[index];
 				
 			} else if (getMode() == "SCATTER") {
-				Direction minPathScatter = ts.findMinPath(x, y, getTargetX(pacman, blinky), getTargetY(pacman, blinky), direction, possibleDirections);
+				Direction minPathScatter = ts.findMinPath(x, y, getTargetX(pacman, blinky), getTargetY(pacman, blinky), possibleDirections);
 				this.x += minPathScatter.getDeltaX();
 				this.y += minPathScatter.getDeltaY();
 				this.direction = minPathScatter;
 				
 			} else if (getMode() == "CHASE") {
-				Direction minPathChase = ts.findMinPath(x, y, getTargetX(pacman, blinky), getTargetY(pacman, blinky), direction, possibleDirections);
+				Direction minPathChase = ts.findMinPath(x, y, getTargetX(pacman, blinky), getTargetY(pacman, blinky), possibleDirections);
 				this.x += minPathChase.getDeltaX();
 				this.y += minPathChase.getDeltaY();
 				this.direction = minPathChase;
@@ -163,7 +213,7 @@ public class Ghost extends Sprite {
 					this.y += this.direction.oppositeDirection().getDeltaY();
 					this.direction = this.direction.oppositeDirection();
 				} else {
-					Direction minPathEaten = ts.findMinPath(x, y, getTargetX(pacman, blinky), getTargetY(pacman, blinky), direction, possibleDirections);
+					Direction minPathEaten = ts.findMinPath(x, y, getTargetX(pacman, blinky), getTargetY(pacman, blinky), possibleDirections);
 					this.x += minPathEaten.getDeltaX();
 					this.y += minPathEaten.getDeltaY();
 					this.direction = minPathEaten;
@@ -174,7 +224,7 @@ public class Ghost extends Sprite {
 					setMode(getSecondaryMode());
 					System.out.println("Set to secondary mode");
 				} else {
-					Direction minPathGH = ts.findMinPath(x, y, getTargetX(pacman, blinky), getTargetY(pacman, blinky), direction, possibleDirections);
+					Direction minPathGH = ts.findMinPath(x, y, getTargetX(pacman, blinky), getTargetY(pacman, blinky), possibleDirections);
 					this.x += minPathGH.getDeltaX();
 					this.y += minPathGH.getDeltaY();
 					this.direction = minPathGH;

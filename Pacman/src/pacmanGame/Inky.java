@@ -26,6 +26,7 @@ public class Inky extends Ghost {
 		scatterY = 152;
 		inGhostHouseX = 59;
 		inGhostHouseY = 75 + 5;
+		canTurnGhostHouse = false;
 		
 		mode = "GHOST_HOUSE";
 	}

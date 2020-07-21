@@ -26,6 +26,7 @@ public class Clyde extends Ghost {
 		scatterY = 152;
 		inGhostHouseX = 80;
 		inGhostHouseY = 75 + 5;
+		canTurnGhostHouse = false;
 		
 		mode = "GHOST_HOUSE";
 	}
@@ -37,7 +38,7 @@ public class Clyde extends Ghost {
 		} else if (getMode() == "EATEN") {
 			return ghostHouseX;
 		} else if (getMode() == "GHOST_HOUSE") {
-			return inGhostHouseY;
+			return inGhostHouseX;
 		} else {
 			double distanceToPacman = Math.sqrt(Math.pow(pacman.getX() - getX(), 2) + Math.pow(pacman.getY() - getY(), 2));
 			if (distanceToPacman <= (8 * 5)) {

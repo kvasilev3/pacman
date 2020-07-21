@@ -25,6 +25,7 @@ public class Blinky extends Ghost {
 		scatterY = -18;
 		inGhostHouseX = 70;
 		inGhostHouseY = 75;
+		canTurnGhostHouse = true;
 		
 		mode = "SCATTER";
 	}
