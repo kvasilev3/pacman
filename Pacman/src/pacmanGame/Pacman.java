@@ -130,8 +130,6 @@ public class Pacman extends Sprite {
 	
 	@Override
 	protected void move(Sprite pacman, Sprite blinky) {
-		// Check for intersection
-		// Check for walkable tiles
 		Direction[] possibleDirections = getPossibleDirections(x, y);
 		for (int i = 0; i < possibleDirections.length; i++) {
 			if(nextDirection == possibleDirections[i]) {

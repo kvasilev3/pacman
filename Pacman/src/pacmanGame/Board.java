@@ -69,7 +69,7 @@ public class Board extends JPanel {
 	
 	private ImageIcon pacmanLives = new ImageIcon("Pacman/src/resources/pacman_right_1.png");
 	
-	private boolean debuggerMode = true;
+	private boolean debuggerMode = false;
 	private ImageIcon grid = new ImageIcon("Pacman/src/resources/tiles_grid.png");
 	private ImageIcon blinkyTarget = new ImageIcon("Pacman/src/resources/blinky_target.png");
 	private ImageIcon inkyTarget = new ImageIcon("Pacman/src/resources/inky_target.png");
@@ -244,7 +244,7 @@ public class Board extends JPanel {
 		}
 		if (debuggerMode) {
 			g2d.drawImage(grid.getImage(), 0, 0, this);
-			//p -= 230;
+			p -= 230;
 		}
 		
 		for (int y=0; y<GRID_HEIGHT; y++) {
@@ -339,7 +339,6 @@ public class Board extends JPanel {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-				
 			if (pacmanDead || levelComplete) {
 				return;
 			}

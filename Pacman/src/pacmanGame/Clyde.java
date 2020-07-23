@@ -4,8 +4,7 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 
 public class Clyde extends Ghost {
-	
-	private double i = 0;
+
 	private Image[] yellowGhost = {
 			new ImageIcon("Pacman/src/resources/clyde_1.png").getImage(),
 			new ImageIcon("Pacman/src/resources/clyde_2.png").getImage()
@@ -71,16 +70,15 @@ public class Clyde extends Ghost {
 	
 	@Override
 	public Image getImage(double frightenedModeStart, double timeCount) {
-		i += 0.5;
 		if (mode == "FRIGHTENED") {
 			return getFrightenedImage(frightenedModeStart, timeCount);
 		} else if (mode == "EATEN") {
 			return null;
 		}else {
-			if (i >= yellowGhost.length) {
-				i = 0;
+			if (Ghost.i >= yellowGhost.length) {
+				Ghost.i = 0;
 			}
 		}
-		return yellowGhost[(int) i];
+		return yellowGhost[(int) Ghost.i];
 	}
 }

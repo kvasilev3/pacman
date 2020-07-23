@@ -16,8 +16,8 @@ public class Ghost extends Sprite {
 	protected int ghostHouseX = 70;
 	protected int ghostHouseY = 57;
 	protected boolean canTurnGhostHouse = false;
-	protected double i = 0;
-	private int j = 0;
+	protected static double i = 0;
+	private static int j = 0;
 	protected Image[] frightenedGhost = {
 			new ImageIcon("Pacman/src/resources/escaping_ghost_1.png").getImage(),
 			new ImageIcon("Pacman/src/resources/escaping_ghost_2.png").getImage(),
@@ -269,19 +269,19 @@ public class Ghost extends Sprite {
 	}
 	
 	public Image getFrightenedImage(double frightenedModeStart, double timeCount) {
-		if (i >= frightenedGhost.length) {
-			i = 0;
-			j++;
-			if (j >= frightenedGhost.length / 2) j = 0;
+		if (Ghost.i >= frightenedGhost.length) {
+			Ghost.i = 0;
+			if (frightenedModeStart > 0) Ghost.j++;
+			if (Ghost.j >= frightenedGhost.length / 2) Ghost.j = 0;
 		}
 		if (timeCount - frightenedModeStart >= 4000) {
-			if (j == 0) {
-				return frightenedGhost[((int) i) % 2];
+			if (Ghost.j == 0) {
+				return frightenedGhost[((int) Ghost.i) % 2];
 			} else {
-				return frightenedGhost[(((int) i) % 2) + 2];
+				return frightenedGhost[(((int) Ghost.i) % 2) + 2];
 			}
 		} else {
-			return frightenedGhost[(int) (i / 2)];
+			return frightenedGhost[(int) (Ghost.i / 2)];
 		}
 	}
 }

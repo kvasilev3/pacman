@@ -5,7 +5,6 @@ import javax.swing.ImageIcon;
 
 public class Pinky extends Ghost {
 
-	private double i = 0;
 	private Image[] pinkGhost = {
 			new ImageIcon("Pacman/src/resources/pinky_1.png").getImage(),
 			new ImageIcon("Pacman/src/resources/pinky_2.png").getImage()
@@ -77,16 +76,15 @@ public class Pinky extends Ghost {
 	
 	@Override
 	public Image getImage(double frightenedModeStart, double timeCount) {
-		i += 0.5;
 		if (mode == "FRIGHTENED") {
 			return getFrightenedImage(frightenedModeStart, timeCount);
 		} else if (mode == "EATEN") {
 			return null;
 		}else {
-			if (i >= pinkGhost.length) {
-				i = 0;
+			if (Ghost.i >= pinkGhost.length) {
+				Ghost.i = 0;
 			}
 		}
-		return pinkGhost[(int) i];
+		return pinkGhost[(int) Ghost.i];
 	}
 }

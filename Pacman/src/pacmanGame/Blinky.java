@@ -60,16 +60,16 @@ public class Blinky extends Ghost {
 	
 	@Override
 	public Image getImage(double frightenedModeStart, double timeCount) {
-		i += 0.5;
+		Ghost.i += 0.5;
 		if (mode == "FRIGHTENED") {
 			return getFrightenedImage(frightenedModeStart, timeCount);
 		} else if (mode == "EATEN") {
 			return null;
 		} else {
-			if (i >= redGhost.length) {
-				i = 0;
+			if (Ghost.i >= redGhost.length) {
+				Ghost.i = 0;
 			}
-			return redGhost[(int) i];
+			return redGhost[(int) Ghost.i];
 		}
 	}
 }

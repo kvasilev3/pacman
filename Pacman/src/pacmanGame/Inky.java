@@ -4,8 +4,7 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 
 public class Inky extends Ghost {
-	
-	private double i = 0;
+
 	private Image[] cyanGhost = {
 			new ImageIcon("Pacman/src/resources/inky_1.png").getImage(),
 			new ImageIcon("Pacman/src/resources/inky_2.png").getImage()
@@ -88,16 +87,15 @@ public class Inky extends Ghost {
 
 	@Override
 	public Image getImage(double frightenedModeStart, double timeCount) {
-		i += 0.5;
 		if (mode == "FRIGHTENED") {
 			return getFrightenedImage(frightenedModeStart, timeCount);
 		} else if (mode == "EATEN") {
 			return null;
 		} else {
-			if (i >= cyanGhost.length) {
-				i = 0;
+			if (Ghost.i >= cyanGhost.length) {
+				Ghost.i = 0;
 			}
 		}
-		return cyanGhost[(int) i];
+		return cyanGhost[(int) Ghost.i];
 	}
 }
