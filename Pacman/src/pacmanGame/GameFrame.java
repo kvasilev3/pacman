@@ -14,10 +14,8 @@ public class GameFrame extends JFrame {
 
 		Board board = Board.getSingleton();
 		add(board);
-		//board.setFocusable(true);
 		
         setTitle("Pacman original 2.0");
-        //setSize(392, 547);
         
         ImageIcon myAppImage = new ImageIcon("Pacman/src/resources/pacman_desktop.png");
         setIconImage(myAppImage.getImage());

@@ -18,11 +18,9 @@ import javax.imageio.ImageIO;
 import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 import javax.swing.Timer;
-import javax.swing.text.TextAction;
 
 public class Board extends JPanel {
 
@@ -49,6 +47,7 @@ public class Board extends JPanel {
 	private double timeCount = 0;
 	private double frightenedModeStart = 0;
 	private double frightenedModeEnd = 0;
+	private double levelCompleteTimer = Double.MAX_VALUE;
 	private double modeStart = 0;
 	private int modeCount = 0;
 
@@ -69,7 +68,7 @@ public class Board extends JPanel {
 	
 	private ImageIcon pacmanLives = new ImageIcon("Pacman/src/resources/pacman_right_1.png");
 	
-	private boolean debuggerMode = false;
+	private boolean debuggerMode = true;
 	private ImageIcon grid = new ImageIcon("Pacman/src/resources/tiles_grid.png");
 	private ImageIcon blinkyTarget = new ImageIcon("Pacman/src/resources/blinky_target.png");
 	private ImageIcon inkyTarget = new ImageIcon("Pacman/src/resources/inky_target.png");
@@ -260,9 +259,19 @@ public class Board extends JPanel {
 		}
 		
 		if (p == 0) {
-			levelComplete = true;
+			if (!levelComplete) {
+				levelComplete = true;
+				levelCompleteTimer = timeCount + 2300;
+			}
 		}
 		
+		if (levelComplete && timeCount >= levelCompleteTimer) {
+			levelCompleteTimer = Double.MAX_VALUE;
+			levelComplete = false;
+			timeCount = 0;
+			initTiles();
+			resetSprites();
+		}
 		
 		if (!pacmanDead && !levelComplete) {
 			for (int i = 0; i < ghosts.length; i++) {
@@ -312,6 +321,14 @@ public class Board extends JPanel {
 		g2d.drawString("PACMAN", 60, getCenteredTextCoordinates(g2d, pacmanScore)[1]);
 	}
 	
+	private void resetSprites() {
+		ghosts[0] = new Blinky();
+		ghosts[1] = new Inky();
+		ghosts[2] = new Pinky();
+		ghosts[3] = new Clyde();
+		pacman = new Pacman();
+	}
+
 	private int[] getCenteredTextCoordinates(Graphics2D g2d, String text) {
 		FontRenderContext context = g2d.getFontRenderContext();
 		Font font = new Font("Arial", Font.BOLD, 15);
@@ -365,7 +382,7 @@ public class Board extends JPanel {
 				for (int i = 0; i < ghosts.length; i++) {
 					if (ghosts[i].getMode() == "SCATTER" || ghosts[i].getMode() == "CHASE") {
 						ghosts[i].setMode("FRIGHTENED");
-						ghosts[i].direction = ghosts[i].direction.oppositeDirection();				
+						ghosts[i].direction = ghosts[i].direction.oppositeDirection();
 					}
 				}
 			}
