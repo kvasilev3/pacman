@@ -305,8 +305,11 @@ public class Board extends JPanel {
 		
 		g2d.setColor(Color.WHITE);
 		g2d.setFont(new Font("Arial", Font.BOLD, 15));
-		g2d.drawString(pacmanScore, getCenteredTextCoordinates(g2d, pacmanScore)[0], getCenteredTextCoordinates(g2d, pacmanScore)[1]);
-		g2d.drawString("SCORE:", getCenteredTextCoordinates(g2d, "SCORE:")[0], 15);
+		g2d.drawString("SCORE:", (int) (getWidth() - 120), 15);
+		g2d.drawString(pacmanScore, (int) (getWidth() - 100), getCenteredTextCoordinates(g2d, pacmanScore)[1]);
+		
+		g2d.setFont(new Font("Arial", Font.BOLD, 25));
+		g2d.drawString("PACMAN", 60, getCenteredTextCoordinates(g2d, pacmanScore)[1]);
 	}
 	
 	private int[] getCenteredTextCoordinates(Graphics2D g2d, String text) {
