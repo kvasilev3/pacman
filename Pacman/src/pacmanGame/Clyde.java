@@ -6,8 +6,8 @@ import javax.swing.ImageIcon;
 public class Clyde extends Ghost {
 
 	private Image[] yellowGhost = {
-			new ImageIcon("Pacman/src/resources/clyde_1.png").getImage(),
-			new ImageIcon("Pacman/src/resources/clyde_2.png").getImage()
+			createImageIcon("/resources/clyde_1.png").getImage(),
+			createImageIcon("/resources/clyde_2.png").getImage()
 	};
 	
 	public Clyde() {

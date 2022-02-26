@@ -36,8 +36,8 @@ public class Board extends JPanel {
 	private final int FRAME = REDRAW_DELAY;
 	private Image background;
 	private Image[] winBackground = {
-			new ImageIcon("Pacman/src/resources/maze_win_1.png").getImage(),
-			new ImageIcon("Pacman/src/resources/maze_win_2.png").getImage()
+			createImageIcon("/resources/maze_win_1.png").getImage(),
+			createImageIcon("/resources/maze_win_2.png").getImage()
 	};
 	private Image pellet;
 	private Image powerPellet;
@@ -61,19 +61,19 @@ public class Board extends JPanel {
 	private final int TILE_NO_PELLET = 4;
 	private final int TILE_IS_WALKABLE_GHOST_HOUSE = 5;
 	
-	private ImageIcon eyesUp = new ImageIcon("Pacman/src/resources/eyes_up.png");
-	private ImageIcon eyesLeft = new ImageIcon("Pacman/src/resources/eyes_left.png");
-	private ImageIcon eyesDown = new ImageIcon("Pacman/src/resources/eyes_down.png");
-	private ImageIcon eyesRight = new ImageIcon("Pacman/src/resources/eyes_right.png");
+	private ImageIcon eyesUp = createImageIcon("/resources/eyes_up.png");
+	private ImageIcon eyesLeft = createImageIcon("/resources/eyes_left.png");
+	private ImageIcon eyesDown = createImageIcon("/resources/eyes_down.png");
+	private ImageIcon eyesRight = createImageIcon("/resources/eyes_right.png");
 	
-	private ImageIcon pacmanLives = new ImageIcon("Pacman/src/resources/pacman_right_1.png");
+	private ImageIcon pacmanLives = createImageIcon("/resources/pacman_right_1.png");
 	
-	private boolean debuggerMode = true;
-	private ImageIcon grid = new ImageIcon("Pacman/src/resources/tiles_grid.png");
-	private ImageIcon blinkyTarget = new ImageIcon("Pacman/src/resources/blinky_target.png");
-	private ImageIcon inkyTarget = new ImageIcon("Pacman/src/resources/inky_target.png");
-	private ImageIcon pinkyTarget = new ImageIcon("Pacman/src/resources/pinky_target.png");
-	private ImageIcon clydeTarget = new ImageIcon("Pacman/src/resources/clyde_target.png");
+	private boolean debuggerMode = false;
+	private ImageIcon grid = createImageIcon("/resources/tiles_grid.png");
+	private ImageIcon blinkyTarget = createImageIcon("/resources/blinky_target.png");
+	private ImageIcon inkyTarget = createImageIcon("/resources/inky_target.png");
+	private ImageIcon pinkyTarget = createImageIcon("/resources/pinky_target.png");
+	private ImageIcon clydeTarget = createImageIcon("/resources/clyde_target.png");
 	
 	
 	private int tiles[][] = new int[GRID_WIDTH][GRID_HEIGHT];
@@ -110,13 +110,13 @@ public class Board extends JPanel {
 		
 		initTiles();
 		
-		ImageIcon ii = new ImageIcon("Pacman/src/resources/maze.png");
+		ImageIcon ii = createImageIcon("/resources/maze.png");
 		background = ii.getImage();
 		
-		ii = new ImageIcon("Pacman/src/resources/pellet.png");
+		ii = createImageIcon("/resources/pellet.png");
 		pellet = ii.getImage();
 		
-		ii = new ImageIcon("Pacman/src/resources/power_pellet.png");
+		ii = createImageIcon("/resources/power_pellet.png");
 		powerPellet = ii.getImage();
 
 		pacmanTimer = new Timer(PACMAN_DELAY, new PacmanMoveListener());
@@ -127,6 +127,16 @@ public class Board extends JPanel {
 		
 		redrawTimer = new Timer(REDRAW_DELAY, new RedrawListener());
 		redrawTimer.start();
+	}
+	
+	private ImageIcon createImageIcon(String path) {
+	    java.net.URL imgURL = getClass().getResource(path);
+	    if (imgURL != null) {
+	        return new ImageIcon(imgURL);
+	    } else {
+	        System.err.println("Couldn't find file: " + path);
+	        return null;
+	    }
 	}
 	
 	private void mapKeys() {
@@ -167,7 +177,7 @@ public class Board extends JPanel {
 		File imageFile = new File("Pacman/src/resources/tiles.png");
 		BufferedImage image = null;
 		try {
-			image = ImageIO.read(imageFile);
+			image = ImageIO.read(getClass().getResourceAsStream("/resources/tiles.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

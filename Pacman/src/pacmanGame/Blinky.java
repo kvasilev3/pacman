@@ -6,8 +6,8 @@ import javax.swing.ImageIcon;
 public class Blinky extends Ghost {
 
 	private Image[] redGhost = {
-			new ImageIcon("Pacman/src/resources/blinky_1.png").getImage(),
-			new ImageIcon("Pacman/src/resources/blinky_2.png").getImage()
+			createImageIcon("/resources/blinky_1.png").getImage(),
+			createImageIcon("/resources/blinky_2.png").getImage()
 			};
 
 	public Blinky() {

@@ -30,40 +30,40 @@ public class Pacman extends Sprite {
 	}
 
 	private Image[] yellowManLeft = {
-			new ImageIcon("Pacman/src/resources/pacman.png").getImage(),
-			new ImageIcon("Pacman/src/resources/pacman_left_1.png").getImage(),
-			new ImageIcon("Pacman/src/resources/pacman_left_2.png").getImage(),
-			new ImageIcon("Pacman/src/resources/pacman_left_1.png").getImage()
+			createImageIcon("/resources/pacman.png").getImage(),
+			createImageIcon("/resources/pacman_left_1.png").getImage(),
+			createImageIcon("/resources/pacman_left_2.png").getImage(),
+			createImageIcon("/resources/pacman_left_1.png").getImage()
 			};
 	private Image[] yellowManRight = {
-			new ImageIcon("Pacman/src/resources/pacman.png").getImage(),
-			new ImageIcon("Pacman/src/resources/pacman_right_1.png").getImage(),
-			new ImageIcon("Pacman/src/resources/pacman_right_2.png").getImage(),
-			new ImageIcon("Pacman/src/resources/pacman_right_1.png").getImage()
+			createImageIcon("/resources/pacman.png").getImage(),
+			createImageIcon("/resources/pacman_right_1.png").getImage(),
+			createImageIcon("/resources/pacman_right_2.png").getImage(),
+			createImageIcon("/resources/pacman_right_1.png").getImage()
 			};
 	private Image[] yellowManUp = {
-			new ImageIcon("Pacman/src/resources/pacman.png").getImage(),
-			new ImageIcon("Pacman/src/resources/pacman_up_1.png").getImage(),
-			new ImageIcon("Pacman/src/resources/pacman_up_2.png").getImage(),
-			new ImageIcon("Pacman/src/resources/pacman_up_1.png").getImage()
+			createImageIcon("/resources/pacman.png").getImage(),
+			createImageIcon("/resources/pacman_up_1.png").getImage(),
+			createImageIcon("/resources/pacman_up_2.png").getImage(),
+			createImageIcon("/resources/pacman_up_1.png").getImage()
 			};
 	private Image[] yellowManDown = {
-			new ImageIcon("Pacman/src/resources/pacman.png").getImage(),
-			new ImageIcon("Pacman/src/resources/pacman_down_1.png").getImage(),
-			new ImageIcon("Pacman/src/resources/pacman_down_2.png").getImage(),
-			new ImageIcon("Pacman/src/resources/pacman_down_1.png").getImage()
+			createImageIcon("/resources/pacman.png").getImage(),
+			createImageIcon("/resources/pacman_down_1.png").getImage(),
+			createImageIcon("/resources/pacman_down_2.png").getImage(),
+			createImageIcon("/resources/pacman_down_1.png").getImage()
 			};
 	private Image[] pacmanDie = {
-			new ImageIcon("Pacman/src/resources/pacman_die_1.png").getImage(),
-			new ImageIcon("Pacman/src/resources/pacman_die_2.png").getImage(),
-			new ImageIcon("Pacman/src/resources/pacman_die_3.png").getImage(),
-			new ImageIcon("Pacman/src/resources/pacman_die_4.png").getImage(),
-			new ImageIcon("Pacman/src/resources/pacman_die_5.png").getImage(),
-			new ImageIcon("Pacman/src/resources/pacman_die_6.png").getImage(),
-			new ImageIcon("Pacman/src/resources/pacman_die_7.png").getImage(),
-			new ImageIcon("Pacman/src/resources/pacman_die_8.png").getImage(),
-			new ImageIcon("Pacman/src/resources/pacman_die_9.png").getImage(),
-			new ImageIcon("Pacman/src/resources/pacman_die_10.png").getImage(),
+			createImageIcon("/resources/pacman_die_1.png").getImage(),
+			createImageIcon("/resources/pacman_die_2.png").getImage(),
+			createImageIcon("/resources/pacman_die_3.png").getImage(),
+			createImageIcon("/resources/pacman_die_4.png").getImage(),
+			createImageIcon("/resources/pacman_die_5.png").getImage(),
+			createImageIcon("/resources/pacman_die_6.png").getImage(),
+			createImageIcon("/resources/pacman_die_7.png").getImage(),
+			createImageIcon("/resources/pacman_die_8.png").getImage(),
+			createImageIcon("/resources/pacman_die_9.png").getImage(),
+			createImageIcon("/resources/pacman_die_10.png").getImage(),
 			
 	};
 	

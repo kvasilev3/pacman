@@ -6,8 +6,8 @@ import javax.swing.ImageIcon;
 public class Inky extends Ghost {
 
 	private Image[] cyanGhost = {
-			new ImageIcon("Pacman/src/resources/inky_1.png").getImage(),
-			new ImageIcon("Pacman/src/resources/inky_2.png").getImage()
+			createImageIcon("/resources/inky_1.png").getImage(),
+			createImageIcon("/resources/inky_2.png").getImage()
 			};
 	
 	public Inky() {

@@ -10,6 +10,16 @@ public class GameFrame extends JFrame {
 		initUI();
 	}
 	
+	private ImageIcon createImageIcon(String path) {
+	    java.net.URL imgURL = getClass().getResource(path);
+	    if (imgURL != null) {
+	        return new ImageIcon(imgURL);
+	    } else {
+	        System.err.println("Couldn't find file: " + path);
+	        return null;
+	    }
+	}
+	
 	private void initUI() {
 
 		Board board = Board.getSingleton();
@@ -17,12 +27,12 @@ public class GameFrame extends JFrame {
 		
         setTitle("Pacman original 2.0");
         
-        ImageIcon myAppImage = new ImageIcon("Pacman/src/resources/pacman_desktop.png");
+        ImageIcon myAppImage = createImageIcon("/resources/pacman_desktop.png");
         setIconImage(myAppImage.getImage());
         
         setLocationRelativeTo(null);
         setResizable(false);
-        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        //setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         pack();
        
     }

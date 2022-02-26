@@ -19,10 +19,10 @@ public class Ghost extends Sprite {
 	protected static double i = 0;
 	private static int j = 0;
 	protected Image[] frightenedGhost = {
-			new ImageIcon("Pacman/src/resources/escaping_ghost_1.png").getImage(),
-			new ImageIcon("Pacman/src/resources/escaping_ghost_2.png").getImage(),
-			new ImageIcon("Pacman/src/resources/escaping_ghost_white_1.png").getImage(),
-			new ImageIcon("Pacman/src/resources/escaping_ghost_white_2.png").getImage()
+			createImageIcon("/resources/escaping_ghost_1.png").getImage(),
+			createImageIcon("/resources/escaping_ghost_2.png").getImage(),
+			createImageIcon("/resources/escaping_ghost_white_1.png").getImage(),
+			createImageIcon("/resources/escaping_ghost_white_2.png").getImage()
 			};
 	private TargettingSystem ts = new TargettingSystem();
 

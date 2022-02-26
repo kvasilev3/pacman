@@ -2,6 +2,8 @@ package pacmanGame;
 
 import java.awt.Image;
 
+import javax.swing.ImageIcon;
+
 public class Sprite {
 	protected int x;
 	protected int y;
@@ -62,5 +64,15 @@ public class Sprite {
 	
 	public String getSecondaryMode() {
 		return secondaryMode;
+	}
+	
+	protected ImageIcon createImageIcon(String path) {
+	    java.net.URL imgURL = getClass().getResource(path);
+	    if (imgURL != null) {
+	        return new ImageIcon(imgURL);
+	    } else {
+	        System.err.println("Couldn't find file: " + path);
+	        return null;
+	    }
 	}
 }
